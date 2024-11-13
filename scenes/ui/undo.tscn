@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://rigwdxim0qjj"]
+
+[ext_resource type="Texture2D" uid="uid://dyhutmyvtljon" path="res://assets/sprites/temp_undo.png" id="1_iq482"]
+
+[node name="Undo" type="TextureButton"]
+texture_normal = ExtResource("1_iq482")

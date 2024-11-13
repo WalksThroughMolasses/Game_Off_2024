@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bkjn7ufohiyp3"]
+
+[ext_resource type="Texture2D" uid="uid://c2y3xj3j4kmm5" path="res://assets/sprites/temp_turn_icon.png" id="1_uatkh"]
+
+[node name="TurnIcon" type="TextureRect"]
+custom_minimum_size = Vector2(128, 128)
+texture = ExtResource("1_uatkh")
+expand_mode = 1
+stretch_mode = 2

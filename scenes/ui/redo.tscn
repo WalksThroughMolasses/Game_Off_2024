@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://duptby1txs1cw"]
+
+[ext_resource type="Texture2D" uid="uid://068y0x0afy68" path="res://assets/sprites/temp_redo.png" id="1_ybllf"]
+
+[node name="Redo" type="TextureButton"]
+texture_normal = ExtResource("1_ybllf")

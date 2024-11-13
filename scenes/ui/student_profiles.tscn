@@ -1,0 +1,170 @@
+[gd_scene load_steps=17 format=3 uid="uid://dxvc5c0vamwj6"]
+
+[ext_resource type="Script" path="res://scenes/ui/student_profiles.gd" id="1_q1djf"]
+[ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="2_2lxh6"]
+[ext_resource type="FontFile" uid="uid://dopn3xodp60oy" path="res://assets/fonts/LUCON.TTF" id="3_j4sg4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbj77"]
+bg_color = Color(0.874537, 0.859657, 0.563633, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="Theme" id="Theme_ggt4u"]
+Panel/styles/panel = SubResource("StyleBoxFlat_kbj77")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aui44"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r7s4"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5lke2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p2ix5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0hs43"]
+
+[sub_resource type="Theme" id="Theme_o07tg"]
+Button/styles/disabled = SubResource("StyleBoxEmpty_aui44")
+Button/styles/focus = SubResource("StyleBoxEmpty_2r7s4")
+Button/styles/hover = SubResource("StyleBoxEmpty_5lke2")
+Button/styles/normal = SubResource("StyleBoxEmpty_p2ix5")
+Button/styles/pressed = SubResource("StyleBoxEmpty_0hs43")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r4oim"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2q1y1"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb1xu"]
+bg_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiipb"]
+bg_color = Color(1, 1, 1, 0.694118)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="Theme" id="Theme_3krfi"]
+Button/styles/focus = SubResource("StyleBoxEmpty_r4oim")
+Button/styles/hover = SubResource("StyleBoxFlat_2q1y1")
+Button/styles/normal = SubResource("StyleBoxFlat_rb1xu")
+Button/styles/pressed = SubResource("StyleBoxFlat_wiipb")
+
+[node name="StudentProfiles" type="Control"]
+layout_mode = 3
+anchor_left = 0.6
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_q1djf")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 72
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 72
+
+[node name="Panel" type="Panel" parent="MarginContainer"]
+layout_mode = 2
+theme = SubResource("Theme_ggt4u")
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(256, 256)
+layout_mode = 2
+size_flags_horizontal = 0
+texture = ExtResource("2_2lxh6")
+expand_mode = 1
+
+[node name="StudentName" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 36
+text = "Student Name"
+
+[node name="StudentTraits" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "(descriptive text) Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
+autowrap_mode = 3
+
+[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "
+Moves:
+
+First thing they can do.
+
+Possible second thing they can do."
+autowrap_mode = 3
+
+[node name="CloseProfile" type="Button" parent="MarginContainer/Panel/MarginContainer"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+focus_mode = 0
+theme = SubResource("Theme_o07tg")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 32
+text = "X"
+
+[node name="ConfirmPassNote" type="Button" parent="MarginContainer/Panel"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.9
+anchor_right = 0.75
+anchor_bottom = 0.95
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme = SubResource("Theme_3krfi")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_pressed_color = Color(0, 0, 0, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("3_j4sg4")
+theme_override_font_sizes/font_size = 36
+text = "PASS NOTE"
+
+[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/CloseProfile" to="." method="_on_close_profile_pressed"]

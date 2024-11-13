@@ -1,0 +1,65 @@
+[gd_scene load_steps=3 format=3 uid="uid://c2h1w8o1euxt7"]
+
+[ext_resource type="Script" path="res://scenes/levels/level_1.gd" id="1_etuih"]
+[ext_resource type="PackedScene" uid="uid://cqqhk7ios8dcn" path="res://scenes/props/desk.tscn" id="2_72mxu"]
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_etuih")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="BG" type="Node2D" parent="."]
+
+[node name="Props" type="Node2D" parent="."]
+
+[node name="Desks" type="Node2D" parent="Props"]
+
+[node name="Desk" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(768, 320)
+
+[node name="Desk2" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(896, 320)
+
+[node name="Desk3" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1024, 320)
+
+[node name="Desk4" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1152, 320)
+
+[node name="Desk5" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(768, 448)
+
+[node name="Desk6" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(896, 448)
+
+[node name="Desk7" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1024, 448)
+
+[node name="Desk8" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1152, 448)
+
+[node name="Desk9" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(768, 576)
+
+[node name="Desk10" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(896, 576)
+
+[node name="Desk11" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1024, 576)
+
+[node name="Desk12" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1152, 576)
+
+[node name="Desk13" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(768, 704)
+
+[node name="Desk14" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(896, 704)
+
+[node name="Desk15" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1024, 704)
+
+[node name="Desk16" parent="Props/Desks" instance=ExtResource("2_72mxu")]
+position = Vector2(1152, 704)
+
+[node name="Characters" type="Node2D" parent="."]

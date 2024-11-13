@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cqk1cb1kqehwq"]
+
+[node name="TurnCounter" type="HBoxContainer"]
+custom_minimum_size = Vector2(912, 0)
+theme_override_constants/separation = 42
+alignment = 1

@@ -17,10 +17,10 @@ var turn_limit : int = 5
 @onready var desk_scene : PackedScene = preload("res://scenes/props/desk.tscn")
 
 var classroom = [
-	["Player", "Empty", "Rival", "Twin 2"],
-	["Empty", "Empty", "Rival", "Empty"],
-	["Empty", "Empty", "Crush", "Empty"],
-	["Empty", "Empty", "Empty", "Empty"]
+	["Player", "Empty", "Rival", "Empty"],
+	["Empty", "Rival", "Rival", "Empty"],
+	["Empty", "Empty", "Empty", "Empty"],
+	["Empty", "Empty", "Rival", "Crush"]
 ]
 var friends = ["Origami", "Hoops", "Twin 1"]
 
@@ -154,6 +154,34 @@ func get_desk_position(student: Student) -> Vector2i:
 
 	return Vector2i(-1, -1)
 	
+func can_bounce_to(note_holder, target_desk):
+	pass
+
+func can_throw_to(note_holder, target_desk):
+	pass
+	
+func can_twin_swap(note_holder, target_desk):
+	pass
+
+func is_desk_valid(note_holder: Student, target_desk: Student):
+	# Check if it's empty
+	if not target_desk.name.begins_with("Empty"):
+		return false
+
+	# Check basic adjacency
+	if are_desks_adjacent(note_holder, target_desk):
+		return true
+
+	# Then check special movements based on traits
+	if note_holder.has_trait("Hoops"):
+		return can_bounce_to(note_holder, target_desk)
+	elif note_holder.has_trait("Origami"):
+		return can_throw_to(note_holder, target_desk)
+	elif note_holder.has_trait("Twin"):
+		return can_twin_swap(note_holder, target_desk)
+
+	return false
+	
 func are_desks_adjacent(note_holder: Student, empty_desk: Student) -> bool:
 	var pos1 = get_desk_position(note_holder)
 	var pos2 = get_desk_position(empty_desk)
@@ -198,10 +226,10 @@ func get_valid_empty_desks(student: Student) -> Array:
 				#print("Same row: ", is_same_row, " Row diff: ", row_diff)
 				#print("Same col: ", is_same_col, " Col diff: ", col_diff)
 
-				var is_adjacent = are_desks_adjacent(student, empty_desk)
+				var is_valid = is_desk_valid(student, empty_desk)
 				#print("Is adjacent: ", is_adjacent)
 
-				if is_adjacent:
+				if is_valid:
 					valid_desks.append(empty_desk)
 	
 	#print("\nFound ", valid_desks.size(), " valid desks")

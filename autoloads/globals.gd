@@ -1,11 +1,13 @@
 extends Node
 
-var classroom = [
-	[null, null, null, null],
-	[null, null, null, null],
-	[null, null, null, null],
-	[null, null, null, null]
-]
+var selected_student : Student
+
+#var classroom = [
+	#[null, null, null, null],
+	#[null, null, null, null],
+	#[null, null, null, null],
+	#[null, null, null, null]
+#]
 
 var student_names = [
 	"Alex",

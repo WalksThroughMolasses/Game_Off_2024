@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://biyc8f3r36iah"]
+
+[ext_resource type="Script" path="res://scenes/ui/friend_placement_panel.gd" id="1_iri1h"]
+
+[node name="FriendPlacementPanel" type="VBoxContainer"]
+offset_right = 164.0
+offset_bottom = 1088.0
+script = ExtResource("1_iri1h")

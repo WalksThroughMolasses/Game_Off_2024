@@ -23,17 +23,17 @@ offset_bottom = 170.0
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.0247512
-anchor_right = 0.655
-anchor_bottom = 0.223756
+anchor_bottom = 0.0247512
 offset_top = 126.832
-offset_right = 47.16
-offset_bottom = 141.359
+offset_right = 131.0
+offset_bottom = 166.832
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 28
+theme_override_font_sizes/font_size = 18
 text = "Test"
 horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

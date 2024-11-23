@@ -11,14 +11,14 @@ config_version=5
 [application]
 
 config/name="PassingNotes"
-run/main_scene="res://scenes/levels/level_1.tscn"
+run/main_scene="res://scenes/levels/game.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
 Globals="*res://autoloads/globals.gd"
-SignalBus="*res://autoloads/signal_bus.gd"
+Utils="*res://autoloads/utils.gd"
 
 [display]
 

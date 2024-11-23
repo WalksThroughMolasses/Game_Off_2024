@@ -1,12 +1,10 @@
 [gd_scene load_steps=2 format=3 uid="uid://cqqhk7ios8dcn"]
 
-[ext_resource type="Texture2D" uid="uid://b7tvwv0gadqwj" path="res://assets/sprites/clip_desk.png" id="1_qd27q"]
+[ext_resource type="Texture2D" uid="uid://pe8uph4if53f" path="res://assets/sprites/Desk_v03.png" id="1_ksw1v"]
 
 [node name="Desk" type="TextureRect"]
 custom_minimum_size = Vector2(192, 192)
-offset_left = -99.0
-offset_top = -56.0
-offset_right = 93.0
-offset_bottom = 136.0
-texture = ExtResource("1_qd27q")
+offset_right = 192.0
+offset_bottom = 192.0
+texture = ExtResource("1_ksw1v")
 expand_mode = 1

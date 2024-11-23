@@ -5,7 +5,7 @@
 [ext_resource type="FontFile" uid="uid://dopn3xodp60oy" path="res://assets/fonts/LUCON.TTF" id="3_j4sg4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbj77"]
-bg_color = Color(0.874537, 0.859657, 0.563633, 1)
+bg_color = Color(0.945098, 0.384314, 0.741176, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
@@ -75,6 +75,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -96.0
+offset_bottom = -440.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 72
@@ -103,6 +105,7 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -116,7 +119,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 36
 text = "Student Name"
 
-[node name="StudentTraits" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="StudentDescription" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -126,6 +129,7 @@ autowrap_mode = 3
 
 [node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 24
@@ -150,6 +154,7 @@ text = "X"
 
 [node name="ConfirmPassNote" type="Button" parent="MarginContainer/Panel"]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.25

@@ -36,15 +36,15 @@ func _on_pressed():
 func receive_note():
 	#note_icon.show()
 	has_note = true
-	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color(1.2, 1.2, 1.2), 0.05)
+	#var tween = create_tween()
+	#tween.tween_property(self, "modulate", Color(1.2, 1.2, 1.2), 0.05)
 
 func passed_note():
 	#note_icon.hide()
 	print(self.name, " passed the note.")
 	has_note = false
-	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color.WHITE, 0.05)
+	#var tween = create_tween()
+	#tween.tween_property(self, "modulate", Color.WHITE, 0.05)
 	
 func highlight():
 	#grid_bg.show()

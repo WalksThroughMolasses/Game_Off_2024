@@ -1,17 +1,19 @@
 extends Control
 
-@onready var student_name_label = %StudentName
-@onready var student_traits_label = %StudentTraits
+@onready var student_name = %StudentName
+@onready var student_description = %StudentDescription
 @onready var confirm_pass_note = %ConfirmPassNote
 
 func _ready():
-	
-	# connect signals
-	var level = get_node("/root/Level") # or however your scene is structured
-	#confirm_pass_note.connect("pressed", level._on_confirm_pass_note_clicked)
+	pass
 
-func set_text(student_name):
-	student_name_label.text = student_name
+func set_text(student_profile):
+	# just for debug purposes
+	if typeof(student_profile) == TYPE_STRING:
+		student_description.text = student_profile
+	else:
+		student_name.text = student_profile["name"]
+		student_description.text = student_profile["description"][0]
 
 func _on_close_profile_pressed():
 	self.hide()

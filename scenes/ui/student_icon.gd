@@ -35,11 +35,11 @@ func _on_pressed():
 	print("clicked ", self)
 	student_clicked.emit(self)
 	
-func highlight(valid: bool):
+func highlight(_valid: bool):
 	$TextureRect.modulate.a = 1
 	print("It's the icon!")
 	#
-func unhighlight(valid: bool):
+func unhighlight(_valid: bool):
 	$TextureRect.modulate.a = 0
 
 func _on_mouse_entered():

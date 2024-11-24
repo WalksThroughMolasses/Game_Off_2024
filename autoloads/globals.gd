@@ -1,10 +1,12 @@
 extends Node
 
 var selected_student : Student
+enum Direction { NORTH, SOUTH, EAST, WEST }
+enum Requirement { BEFORE, AFTER }
 var classroom = [
 	["player", "empty", "empty", "bully_1"],
-	["empty", "twin_2", "empty", "bully_2"],
-	["empty", "empty", "empty", "empty"],
+	["empty", "empty", "empty", "bully_2"],
+	["empty", "twin_2", "empty", "empty"],
 	["empty", "empty", "crush", "empty"]
 ]
 var friends = ["headphones", "best_friend", "twin_1", "quiet_kid"]

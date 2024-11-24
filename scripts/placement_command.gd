@@ -30,7 +30,7 @@ func execute() -> void:
 	target_desk.is_friend = true
 	level.friend_placement_panel.remove_icon(friend_name)
 	level.update_classroom_array(target_desk, friend_name)  # Update array BEFORE applying state
-	apply_state_changes(level)  # Then apply state changes
+	apply_state_changes()  # Then apply state changes
 	level.current_note_holder = target_desk
 	
 	# Check validity of student placements and upate note chain
@@ -48,7 +48,7 @@ func undo() -> void:
 	target_desk.highlight(true)
 	
 	var classroom_state = level.classroom.duplicate(true)
-	restore_state_from_snapshot(level)
+	restore_state_from_snapshot()
 	level.classroom = classroom_state 
 	
 	# Set note holder
@@ -62,10 +62,10 @@ func undo() -> void:
 	
 	level.update_preview()
 
-func apply_state_changes(level):
+func apply_state_changes():
 	# Apply state changes from snapshot
 	level.classroom = state_snapshot.classroom.duplicate(true)
 	
-func restore_state_from_snapshot(level):
+func restore_state_from_snapshot():
 	# Restore state from snapshot
 	level.classroom = state_snapshot.classroom.duplicate(true)

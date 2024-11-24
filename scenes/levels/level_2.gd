@@ -1,11 +1,11 @@
 var level_config = {
 	"classroom": [
-		["player", "empty", "empty", "bully_1"],
-		["empty", "empty", "empty", "bully_2"],
-		["empty", "twin_2", "empty", "empty"],
-		["empty", "empty", "crush", "empty"]
+		["player", "crush", "empty", "empty"],
+		["empty", "empty", "empty", "empty"],
+		["empty", "empty", "empty", "empty"],
+		["empty", "empty", "empty", "empty"]
 	],
-	"friends": ["best_friend", "headphones", "twin_1", "quiet_kid"],
+	"friends": ["best_friend", "headphones", "twin_1", "wally"],
 	"student_configs": {
 		"crush": {
 			"name": "Crush",

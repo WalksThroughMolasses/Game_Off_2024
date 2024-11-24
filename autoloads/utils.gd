@@ -1,6 +1,6 @@
 extends Node
 
-static func get_adjacent_positions(pos: Vector2i, classroom: Array) -> Array[Vector2i]:
+func get_adjacent_positions(pos: Vector2i, classroom: Array) -> Array[Vector2i]:
 	var adjacent: Array[Vector2i] = []
 	# Same row
 	if pos.y > 0:

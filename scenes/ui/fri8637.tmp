@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://biyc8f3r36iah"]
+
+[ext_resource type="Script" path="res://scenes/ui/friend_placement_panel.gd" id="1_iri1h"]
+[ext_resource type="PackedScene" uid="uid://w5fb1b1f8oq" path="res://scenes/ui/student_icon.tscn" id="2_11nn8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbj77"]
+bg_color = Color(1, 0.698039, 0.831373, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.592157, 0.458824, 1, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="Theme" id="Theme_3fhsf"]
+Panel/styles/panel = SubResource("StyleBoxFlat_kbj77")
+
+[node name="FriendPlacementPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 832.0
+offset_bottom = 384.0
+script = ExtResource("1_iri1h")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(660, 312)
+layout_mode = 0
+offset_right = 660.0
+offset_bottom = 312.0
+theme = SubResource("Theme_3fhsf")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 1
+offset_right = 608.0
+offset_bottom = 288.0
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 4
+
+[node name="StudentIcon" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon2" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon3" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon4" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon5" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon6" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon7" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2
+
+[node name="StudentIcon8" parent="GridContainer" instance=ExtResource("2_11nn8")]
+layout_mode = 2

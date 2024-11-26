@@ -1,54 +1,61 @@
-[gd_scene load_steps=17 format=3 uid="uid://dxvc5c0vamwj6"]
+[gd_scene load_steps=19 format=3 uid="uid://dxvc5c0vamwj6"]
 
 [ext_resource type="Script" path="res://scenes/ui/student_profiles.gd" id="1_q1djf"]
 [ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="2_2lxh6"]
+[ext_resource type="FontFile" uid="uid://c4ehg0t3jwge4" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="3_1vjxm"]
 [ext_resource type="FontFile" uid="uid://dopn3xodp60oy" path="res://assets/fonts/LUCON.TTF" id="3_j4sg4"]
+[ext_resource type="FontFile" uid="uid://cl251hht55k4s" path="res://assets/fonts/ArchivoNarrow-Italic-VariableFont_wght.ttf" id="4_cq8v5"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbj77"]
-bg_color = Color(0.945098, 0.384314, 0.741176, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wryvs"]
+bg_color = Color(1, 0.698039, 0.831373, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.945098, 0.384314, 0.741176, 1)
+corner_radius_top_left = 35
+corner_radius_top_right = 35
+corner_radius_bottom_right = 35
+corner_radius_bottom_left = 35
 shadow_offset = Vector2(10, 10)
 
 [sub_resource type="Theme" id="Theme_ggt4u"]
-Panel/styles/panel = SubResource("StyleBoxFlat_kbj77")
+Panel/styles/panel = SubResource("StyleBoxFlat_wryvs")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_aui44"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6cocv"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2r7s4"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3bpty"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_5lke2"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mghsm"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p2ix5"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0monp"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0hs43"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j7dga"]
 
 [sub_resource type="Theme" id="Theme_o07tg"]
-Button/styles/disabled = SubResource("StyleBoxEmpty_aui44")
-Button/styles/focus = SubResource("StyleBoxEmpty_2r7s4")
-Button/styles/hover = SubResource("StyleBoxEmpty_5lke2")
-Button/styles/normal = SubResource("StyleBoxEmpty_p2ix5")
-Button/styles/pressed = SubResource("StyleBoxEmpty_0hs43")
+Button/styles/disabled = SubResource("StyleBoxEmpty_6cocv")
+Button/styles/focus = SubResource("StyleBoxEmpty_3bpty")
+Button/styles/hover = SubResource("StyleBoxEmpty_mghsm")
+Button/styles/normal = SubResource("StyleBoxEmpty_0monp")
+Button/styles/pressed = SubResource("StyleBoxEmpty_j7dga")
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r4oim"]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2k2iy"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2q1y1"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_clq5a"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rb1xu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nyfpb"]
 bg_color = Color(1, 1, 1, 1)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wiipb"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5rhi"]
 bg_color = Color(1, 1, 1, 0.694118)
 corner_radius_top_left = 10
 corner_radius_top_right = 10
@@ -56,10 +63,10 @@ corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
 [sub_resource type="Theme" id="Theme_3krfi"]
-Button/styles/focus = SubResource("StyleBoxEmpty_r4oim")
-Button/styles/hover = SubResource("StyleBoxFlat_2q1y1")
-Button/styles/normal = SubResource("StyleBoxFlat_rb1xu")
-Button/styles/pressed = SubResource("StyleBoxFlat_wiipb")
+Button/styles/focus = SubResource("StyleBoxEmpty_2k2iy")
+Button/styles/hover = SubResource("StyleBoxFlat_clq5a")
+Button/styles/normal = SubResource("StyleBoxFlat_nyfpb")
+Button/styles/pressed = SubResource("StyleBoxFlat_t5rhi")
 
 [node name="StudentProfiles" type="Control"]
 layout_mode = 3
@@ -70,41 +77,33 @@ grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("1_q1djf")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -96.0
-offset_bottom = -440.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 72
-theme_override_constants/margin_top = 72
-theme_override_constants/margin_right = 72
-theme_override_constants/margin_bottom = 72
-
-[node name="Panel" type="Panel" parent="MarginContainer"]
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(659, 473)
 layout_mode = 2
+anchor_top = 0.1
+anchor_bottom = 0.1
+offset_left = -6.0
+offset_right = 653.0
+offset_bottom = 473.0
 theme = SubResource("Theme_ggt4u")
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
-theme_override_constants/margin_right = 30
+theme_override_constants/margin_left = 75
+theme_override_constants/margin_top = 75
+theme_override_constants/margin_right = 75
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 50
 
-[node name="TextureRect" type="TextureRect" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="TextureRect" type="TextureRect" parent="Panel/MarginContainer/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(256, 256)
 layout_mode = 2
@@ -112,22 +111,24 @@ size_flags_horizontal = 0
 texture = ExtResource("2_2lxh6")
 expand_mode = 1
 
-[node name="StudentName" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="StudentName" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 36
+theme_override_colors/font_color = Color(0.32549, 0.203922, 0.294118, 1)
+theme_override_fonts/font = ExtResource("3_1vjxm")
+theme_override_font_sizes/font_size = 48
 text = "Student Name"
 
-[node name="StudentDescription" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="StudentDescription" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 24
+theme_override_colors/font_color = Color(0.32549, 0.203922, 0.294118, 1)
+theme_override_fonts/font = ExtResource("4_cq8v5")
+theme_override_font_sizes/font_size = 28
 text = "(descriptive text) Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum"
 autowrap_mode = 3
 
-[node name="Label" type="Label" parent="MarginContainer/Panel/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
@@ -141,7 +142,8 @@ First thing they can do.
 Possible second thing they can do."
 autowrap_mode = 3
 
-[node name="CloseProfile" type="Button" parent="MarginContainer/Panel/MarginContainer"]
+[node name="CloseProfile" type="Button" parent="Panel/MarginContainer"]
+visible = false
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 8
@@ -152,7 +154,7 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 text = "X"
 
-[node name="ConfirmPassNote" type="Button" parent="MarginContainer/Panel"]
+[node name="ConfirmPassNote" type="Button" parent="Panel"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 1
@@ -172,4 +174,4 @@ theme_override_fonts/font = ExtResource("3_j4sg4")
 theme_override_font_sizes/font_size = 36
 text = "PASS NOTE"
 
-[connection signal="pressed" from="MarginContainer/Panel/MarginContainer/CloseProfile" to="." method="_on_close_profile_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/CloseProfile" to="." method="_on_close_profile_pressed"]

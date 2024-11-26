@@ -1,6 +1,6 @@
 extends Node2D
 
-var debug_on: bool = false
+var debug_on: bool = Globals.debug_on
 
 var planner: PlanningController
 var current_level: int = 1
@@ -10,10 +10,10 @@ var classroom : Array
 var friends : Array
 var turn_limit: int = 5
 
-@onready var desk_grid = $Desks/MarginContainer/GridContainer
+@onready var desk_grid = $UI/Desks/MarginContainer/GridContainer
 @onready var student_profile_box = $UI/StudentProfiles
 @onready var friend_placement_panel = $UI/FriendPlacementPanel
-@onready var note_trail = $NoteTrail
+@onready var note_trail = $UI/NoteTrail
 
 var arrow = load("res://assets/sprites/cursor.png")
 
@@ -71,11 +71,11 @@ func setup_level():
 	current_note_holder = player
 	
 	# Set note trail position
-	var player_center = player.get_node("Marker2D").global_position
+	var player_center = player.get_node("Control/Panel/Marker2D").global_position
 	note_trail.position = player_center
 	
 	# Set character profile to first friend
-	_on_student_clicked(friend_placement_panel.get_children()[0])
+	_on_student_clicked(friend_placement_panel.get_node("Panel/GridContainer").get_children()[0])
 
 	# init planning phase
 	planner.start_planning()

@@ -1,14 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://b6jilagiy0cko"]
+[gd_scene load_steps=6 format=3 uid="uid://b6jilagiy0cko"]
 
 [ext_resource type="Script" path="res://scenes/characters/student/student_avatar.gd" id="1_1dwn7"]
 [ext_resource type="PackedScene" uid="uid://cqqhk7ios8dcn" path="res://scenes/props/desk.tscn" id="2_gmhdo"]
 [ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="3_ajofj"]
-[ext_resource type="Texture2D" uid="uid://fd7xk3ma0eo5" path="res://assets/sprites/characters/Player.png" id="3_aua4r"]
 
 [sub_resource type="Theme" id="Theme_visdg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fl1il"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(1, 0.890196, 0.458824, 0.862745)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
@@ -46,22 +45,23 @@ mouse_filter = 2
 color = Color(1, 0.890196, 0.458824, 1)
 
 [node name="Desk" parent="Control/Panel" instance=ExtResource("2_gmhdo")]
-visible = false
 layout_mode = 2
-offset_left = -1.0
-offset_top = 117.0
-offset_right = 200.0
-offset_bottom = 318.0
+offset_left = 3.0
+offset_top = 125.0
+offset_right = 195.0
+offset_bottom = 317.0
 mouse_filter = 2
 
 [node name="CharacterArt" type="TextureRect" parent="Control/Panel"]
+visible = false
 layout_mode = 0
-offset_right = 200.0
-offset_bottom = 200.0
-texture = ExtResource("3_aua4r")
+offset_left = -73.0
+offset_top = -34.0
+offset_right = 3407.0
+offset_bottom = 3446.0
+scale = Vector2(0.1, 0.1)
 
 [node name="DebugCharacterArt" type="TextureRect" parent="Control/Panel"]
-visible = false
 layout_mode = 2
 offset_left = 36.0
 offset_top = 34.0
@@ -71,7 +71,6 @@ mouse_filter = 2
 texture = ExtResource("3_ajofj")
 
 [node name="DebugLabel" type="ColorRect" parent="Control/Panel"]
-visible = false
 layout_mode = 0
 offset_left = 35.0
 offset_top = 170.0

@@ -1,5 +1,7 @@
 extends Node
 
+var debug_on = false
+
 var selected_student : Student
 enum Direction { NORTH, SOUTH, EAST, WEST }
 enum Requirement { BEFORE, AFTER }

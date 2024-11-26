@@ -1,25 +1,57 @@
-[gd_scene load_steps=3 format=3 uid="uid://w5fb1b1f8oq"]
+[gd_scene load_steps=6 format=3 uid="uid://w5fb1b1f8oq"]
 
-[ext_resource type="Texture2D" uid="uid://c2y3xj3j4kmm5" path="res://assets/sprites/temp_turn_icon.png" id="1_lo2do"]
 [ext_resource type="Script" path="res://scenes/ui/student_icon.gd" id="2_3vdpv"]
+[ext_resource type="Shader" path="res://scenes/ui/student_icon.gdshader" id="2_evool"]
+[ext_resource type="Texture2D" uid="uid://fd7xk3ma0eo5" path="res://assets/sprites/characters/Player.png" id="3_lile3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qdfoo"]
+shader = ExtResource("2_evool")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/border_pixels = 2.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i0fs"]
+shader = ExtResource("2_evool")
+shader_parameter/border_color = Color(1, 1, 1, 1)
+shader_parameter/border_pixels = 2.0
 
 [node name="StudentIcon" type="Button"]
-custom_minimum_size = Vector2(128, 128)
+custom_minimum_size = Vector2(125, 125)
 script = ExtResource("2_3vdpv")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="CharacterArt" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_qdfoo")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -99.5
+offset_top = -99.5
+offset_right = 100.5
+offset_bottom = 100.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_lile3")
+
+[node name="Mask" type="ColorRect" parent="."]
+visible = false
+clip_children = 1
+material = SubResource("ShaderMaterial_0i0fs")
+clip_contents = true
 layout_mode = 0
-offset_right = 131.0
-offset_bottom = 138.0
-texture = ExtResource("1_lo2do")
+offset_right = 125.0
+offset_bottom = 125.0
 
 [node name="ColorRect" type="ColorRect" parent="."]
+visible = false
 layout_mode = 0
 offset_top = 128.0
 offset_right = 131.0
 offset_bottom = 170.0
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.0247512

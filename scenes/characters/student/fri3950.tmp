@@ -8,7 +8,7 @@
 [sub_resource type="Theme" id="Theme_visdg"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fl1il"]
-bg_color = Color(1, 1, 1, 1)
+bg_color = Color(1, 0.890196, 0.458824, 0.862745)
 corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15

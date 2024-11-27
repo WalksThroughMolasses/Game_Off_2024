@@ -44,7 +44,7 @@ var level_config = {
 			The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["twin_01"]
+					"must_sit_next_to": ["twin_02"]
 				})
 			]
 		},

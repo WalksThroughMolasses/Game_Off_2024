@@ -42,7 +42,7 @@ var level_config = {
 				})
 			]
 		},
-		"best_friend": {
+		"bff_male": {
 			"name": "Eugene",
 			"description": ["My best friend. If he's not sitting next to me, he has to be the one to give the note to my crush."],
 			"rules": [
@@ -51,7 +51,7 @@ var level_config = {
 				})
 			]
 		},
-		"twin_2": {
+		"twin_02": {
 			"name": "Yellow",
 			"description": ["The twins need to sit together. I don't know why. It's just a fact about them."],
 			"rules": [
@@ -60,14 +60,14 @@ var level_config = {
 				})
 			]
 		},
-		"bully_1": {
+		"bully_01": {
 			"name": "Devin",
 			"description": ["..."],
 			"rules": [
 				AdjacentRule.new()
 			]
 		},
-		"bully_2": {
+		"bully_02": {
 			"name": "Boris",
 			"description": ["..."],
 			"rules": [

@@ -60,15 +60,15 @@ func _ready():
 	var level = get_node("/root/Level") # or however your scene is structured
 	connect("student_clicked", level._on_student_clicked)
 	connect("student_placed", level._on_student_placed)
-	
+
 	var panel_center = Vector2(
 	grid_bg.global_position.x + (grid_bg.size.x / 2),
 	grid_bg.global_position.y + (grid_bg.size.y / 2)
 	)
 	marker.global_position = panel_center
 	
-	if !is_friend:
-		grid_bg.modulate = highlight_immovable
+	#if !is_moveable:
+		#grid_bg.modulate = highlight_immovable
 
 func set_grid_position(pos: Vector2i):
 	grid_position = pos
@@ -115,30 +115,31 @@ func passed_note():
 	#tween.tween_property(self, "modulate", Color.WHITE, 0.05)
 	
 func highlight(valid: bool) -> void:
-	grid_bg.modulate = Color.WHITE
-	#grid_bg.show()
-	grid_bg.modulate.a = 1
+
 	if valid:
 		placement_valid = true
 		grid_bg.modulate = highlight_valid_placement
 	else:
 		placement_valid = false
 		grid_bg.modulate = highlight_invalid_placement
-	#
+	
+	if !is_moveable:
+		grid_bg.modulate = highlight_immovable
+
 #func unhighlight():
 	##grid_bg.hide()
 	#grid_bg.modulate.a = 0
 #
-func _on_mouse_entered():
-	if has_note:
-		return
-	else:
-		var tween = create_tween()
-		tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
-
-func _on_mouse_exited():
-	if has_note:
-		return
-	else:
-		var tween = create_tween()
-		tween.tween_property(self, "modulate", Color.WHITE, 0.05)
+#func _on_mouse_entered():
+	#if has_note:
+		#return
+	#else:
+		#var tween = create_tween()
+		#tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
+#
+#func _on_mouse_exited():
+	#if has_note:
+		#return
+	#else:
+		#var tween = create_tween()
+		#tween.tween_property(self, "modulate", Color.WHITE, 0.05)

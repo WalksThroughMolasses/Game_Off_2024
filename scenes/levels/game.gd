@@ -146,18 +146,27 @@ func seat_student(student_name):
 	# Name student
 	student.set_student_name(student_name)
 	
+	# Highlight
+	if student_name == "empty":
+		student.is_moveable = true
+	else:
+		student.is_moveable = false
+
+	
 	# Set player status
 	if student.name == "player":
 		student.make_player()
+		student.is_moveable = true
+		
 	# Set crush as friend    
 	elif student.name == "crush":
 		student.is_friend = true
+		student.is_moveable = true
+	else:
+		student.is_friend = false
 
-	# Highlight default color
-	student.highlight(true)
-	
 	# Lock movement (characters placed at start of game cannot be moved)
-	student.is_moveable = false
+	student.highlight(true)
 	
 #func get_desk_position(student: Student) -> Vector2i:
 	## If it's an empty desk, we need to find the correct empty position

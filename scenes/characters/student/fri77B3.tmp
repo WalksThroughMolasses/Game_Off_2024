@@ -43,6 +43,7 @@ offset_top = -2.0
 offset_right = 203.0
 offset_bottom = 203.0
 mouse_filter = 2
+color = Color(1, 0.890196, 0.458824, 1)
 
 [node name="Desk" parent="Control/Panel" instance=ExtResource("2_gmhdo")]
 visible = false

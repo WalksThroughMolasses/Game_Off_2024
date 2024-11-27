@@ -1,11 +1,11 @@
 var level_config = {
 	"classroom": [
-		["player_female", "empty", "empty", "empty"],
+		["player_female", "bully_02", "bully_01", "player_male"],
 		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "player_male", "empty"]
+		["empty", "empty", "twin_01", "furry"],
+		["empty", "smelly", "empty", "empty"]
 	],
-	"friends": ["bff_male"],
+	"friends": ["posh", "crying", "twin_02", "photographer", "frog"],
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
@@ -22,7 +22,7 @@ var level_config = {
 			"description": ["""Won't sit with the twins."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["twin_01", "twin_02", "smelly"],
+					"cant_sit_next_to": ["twin_01", "twin_02", "smelly", "furry"],
 				})
 			]
 		},
@@ -63,14 +63,18 @@ var level_config = {
 		},
 		"posh": { 
 			"name": "Eleanor",
-			"description": ["""She won't help until she finishes her tea. (After turn 2)"""],
-			"rules": []
+			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"furry": {
 			"name": "Dylan",
-			"description": ["""Anyone who's allergic to cats knows not to sit next to him, or they'll start sneezing like crazy.
+			"description": ["""Alice, Alfonso and Ivana won't sit next to him, because they're allergic to cats.
 							
-							It's unclear if he just happens to own a cat... or if his costume is somehow made of real cat hair."""],
+							It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
 			"rules": [
 			]
 		},
@@ -92,7 +96,7 @@ var level_config = {
 							The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["twin_01"],
+					"must_sit_next_to": ["twin_02"],
 					"can't_sit_next_to": ["smelly"]
 				})
 			]
@@ -149,8 +153,12 @@ var level_config = {
 		},
 		"frog": {
 			"name": "Little Lilypad",
-			"description": ["""Yeah, I'm not sure what to say about this guy."""],
-			"rules": []
+			"description": ["""Jayden and Trent will try to steal his lilypad if he sits next to them."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["bully_01", "bully_02"]
+				})
+			]
 		},
 		"headphones": {
 			"name": "Aabria",

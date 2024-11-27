@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://co1u03q3o8f4q"
-path="res://.godot/imported/Crush.png-7ebb38503948777fe17edaa1c0f6a03e.ctex"
+uid="uid://fd7xk3ma0eo5"
+path="res://.godot/imported/Player_Female.png-6f67753a59d877cfc9eee79268eee8af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/characters/Crush.png"
-dest_files=["res://.godot/imported/Crush.png-7ebb38503948777fe17edaa1c0f6a03e.ctex"]
+source_file="res://assets/sprites/characters/Player_Female.png"
+dest_files=["res://.godot/imported/Player_Female.png-6f67753a59d877cfc9eee79268eee8af.ctex"]
 
 [params]
 

@@ -1,7 +1,7 @@
 extends Node
 
 var debug_on = false
-
+var current_level : int = 1
 var selected_student : Student
 enum Direction { NORTH, SOUTH, EAST, WEST }
 enum Requirement { BEFORE, AFTER }

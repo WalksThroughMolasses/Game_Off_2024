@@ -1,13 +1,13 @@
 var level_config = {
 	"classroom": [
-		["player", "empty", "empty", "bully_01"],
+		["player_female", "empty", "empty", "bully_01"],
 		["empty", "empty", "empty", "bully_02"],
 		["empty", "twin_02", "empty", "empty"],
-		["empty", "empty", "crush", "empty"]
+		["empty", "empty", "player_male", "empty"]
 	],
 	"friends": ["bff_female", "headphones", "twin_01", "crying"],
 	"student_configs": {
-		"crush": {
+		"player_male": {
 			"name": "Bobby",
 			"description": ["""<3"""],
 			"rules": []
@@ -59,14 +59,27 @@ var level_config = {
 				})
 			]
 		},
+		"bff_male": {
+			"name": "Eugene",
+			"description": ["""My best friend.
+
+							If he's not sitting next to me, he has to be the one to give the note to Nina."""],
+			"rules": [
+				AdjacentRule.new({
+					"must_sit_next_to": ["player_male"],
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
+		},
 		"bff_female": { 
 			"name": "Sophie",
 			"description": ["""My best friend.
-
+							
 							If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["player", "crush"]
+					"must_sit_next_to": ["player_female"],
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},

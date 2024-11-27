@@ -27,7 +27,7 @@ func execute() -> void:
 	
 	target_desk.set_student_name(friend_name)
 	target_desk.grid_position = grid_position
-	target_desk.is_friend = true
+	target_desk.empty_desk = false
 	level.friend_placement_panel.remove_icon(friend_name)
 	level.update_classroom_array(target_desk, friend_name)  # Update array BEFORE applying state
 	apply_state_changes()  # Then apply state changes
@@ -41,7 +41,7 @@ func execute() -> void:
 
 func undo() -> void:
 	target_desk.set_student_name("empty")
-	target_desk.is_friend = false
+	target_desk.empty_desk = true
 	level.update_classroom_array(target_desk, "empty")
 	level.friend_placement_panel.add_icon(friend_name)
 	

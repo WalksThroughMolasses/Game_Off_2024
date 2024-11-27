@@ -1,9 +1,9 @@
 var level_config = {
 	"classroom": [
-		["player_female", "empty", "empty", "empty"],
+		["player_male", "empty", "empty", "empty"],
 		["empty", "empty", "empty", "empty"],
 		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "player_male", "empty"]
+		["empty", "empty", "player_female", "empty"]
 	],
 	"friends": ["bff_male"],
 	"student_configs": {

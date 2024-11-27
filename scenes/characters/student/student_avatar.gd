@@ -6,13 +6,13 @@ const character_textures = {
 	"bff_male": preload("res://assets/sprites/characters/BFF_02.png"),
 	"bully_01": preload("res://assets/sprites/characters/Bully_01.png"),
 	"bully_02": preload("res://assets/sprites/characters/Bully_02.png"),
-	"crush": preload("res://assets/sprites/characters/Crush.png"),
+	"player_male": preload("res://assets/sprites/characters/Player_Male.png"),
 	"crying": preload("res://assets/sprites/characters/Crying.png"),
 	"frog": preload("res://assets/sprites/characters/Frog.png"),
 	"furry": preload("res://assets/sprites/characters/Furry.png"),
 	"musician": preload("res://assets/sprites/characters/Musician.png"),
 	"headphones": preload("res://assets/sprites/characters/Headphones.png"),
-	"player": preload("res://assets/sprites/characters/Player.png"),
+	"player_female": preload("res://assets/sprites/characters/Player_Female.png"),
 	"poser": preload("res://assets/sprites/characters/Poser.png"),
 	"posh": preload("res://assets/sprites/characters/Posh.png"),
 	"shakas": preload("res://assets/sprites/characters/Shakas.png"),
@@ -78,22 +78,46 @@ func _apply_name(student_name):
 	if "empty" in student_name:
 		set_desk_empty()
 	else:
+		if student_name == "player_female":
+			if Globals.current_level % 2 != 0:
+				self.make_player()
+			else:
+				self.make_crush()
+		elif student_name == "player_male":
+			if Globals.current_level % 2 != 0:
+				self.make_crush()
+			else:
+				self.make_player()
+
 		character_art.texture = character_textures[student_name]
-		character_art.show() # TODO: should set this to the correct sprite when art is in
-		#debug_label.show()
+		character_art.show()
 		self.name = student_name
 		debug_label.text = student_name
 
 func set_desk_empty():
 	empty_desk = true
+	is_moveable = true
+	is_friend = true
 	character_art.hide()
 	debug_label.hide()
 
 func make_player():
+	#character_art.texture = character_textures["player"]
 	self.add_to_group("player")
+	self.remove_from_group("crush")
+	
+	self.is_moveable = false
+	self.is_friend = true
+
+func make_crush():
+	#character_art.texture = character_textures["crush"]
+	self.add_to_group("crush")
+	self.remove_from_group("player")
+	
+	self.is_moveable = false
+	self.is_friend = true
 
 func _on_pressed():
-	print("PRESSED")
 	if empty_desk:
 		if Globals.selected_student:
 			print("Seating student: ", Globals.selected_student)
@@ -123,7 +147,7 @@ func highlight(valid: bool) -> void:
 		placement_valid = false
 		grid_bg.modulate = highlight_invalid_placement
 	
-	if !is_moveable:
+	if !is_friend:
 		grid_bg.modulate = highlight_immovable
 
 #func unhighlight():

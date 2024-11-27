@@ -19,6 +19,10 @@ func add_icon(student_name: String):
 	
 	return student_icon
 	
+func clear_all_icons():
+	for child in grid_container.get_children():
+		child.queue_free()
+	
 func remove_icon(student_name: String):
 	for child in grid_container.get_children():
 		if child.name == student_name:

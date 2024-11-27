@@ -3,12 +3,11 @@ extends Node2D
 var debug_on: bool = Globals.debug_on
 
 var planner: PlanningController
-var current_level: int = 1
 var level_config: Dictionary
 var student_configs : Dictionary
 var classroom : Array
 var friends : Array
-var turn_limit: int = 5
+var awaiting_level_advance : bool = false
 
 @onready var desk_grid = $UI/Desks/MarginContainer/GridContainer
 @onready var student_profile_box = $UI/StudentProfiles
@@ -46,8 +45,14 @@ func _input(event):
 	elif event.is_action_pressed("redo"):
 		planner.redo()
 		update_preview()
-	elif event.is_action_pressed("ui_accept"):
-		return
+	#elif event.is_action_pressed("ui_accept"):
+		#return
+		
+	if awaiting_level_advance and event.is_action_pressed("ui_accept"):
+		awaiting_level_advance = false
+		Globals.current_level += 1
+		load_level_config()
+		reset_and_setup_level()
 
 func setup_level():
 	# Clear placeholder grid
@@ -84,7 +89,7 @@ func setup_level():
 	update_preview()
 	
 func load_level_config():
-	var level_script = load("res://scenes/levels/level_%d.gd" % current_level).new()
+	var level_script = load("res://scenes/levels/level_%d.gd" % Globals.current_level).new()
 	level_config = level_script.level_config
 	student_configs = level_config["student_configs"]
 	classroom = level_config.classroom
@@ -92,21 +97,32 @@ func load_level_config():
 
 func on_level_complete():
 	# Show completion message
-	# TODO: await message confirmation
-	current_level += 1
-	load_level_config()
-	reset_and_setup_level()
+	print("Level Complete! Press Space to continue...")
+	awaiting_level_advance = true
 
 func reset_and_setup_level():
+	# Reset current note holder and player references
+	current_note_holder = null
+	player = null
+
 	# Clear existing students/desks
 	for child in desk_grid.get_children():
 		child.queue_free()
+	
+	# Clear friend placement panel icons
+	friend_placement_panel.clear_all_icons()
+
+	# Important: Wait for the next frame to ensure nodes are fully freed
+	await get_tree().process_frame
+
 	# Clear note trail
 	note_trail.clear_points()
+
 	# Reset game state
 	student_configs = level_config["student_configs"]
 	classroom = level_config.classroom
 	friends = level_config.friends
+
 	# Setup new layout from config
 	setup_level()
 
@@ -145,53 +161,66 @@ func seat_student(student_name):
 	
 	# Name student
 	student.set_student_name(student_name)
-	
-	# Highlight
-	if student_name == "empty":
-		student.is_moveable = true
-	else:
-		student.is_moveable = false
-
-	
-	# Set player status
-	if student.name == "player":
-		student.make_player()
-		student.is_moveable = true
-		
-	# Set crush as friend    
-	elif student.name == "crush":
-		student.is_friend = true
-		student.is_moveable = true
-	else:
-		student.is_friend = false
 
 	# Lock movement (characters placed at start of game cannot be moved)
 	student.highlight(true)
-	
-#func get_desk_position(student: Student) -> Vector2i:
-	## If it's an empty desk, we need to find the correct empty position
-	#if student.name.begins_with("empty"):
-		#for row in classroom.size():
-			#for col in classroom[row].size():
-				## Get the desk index to match with the actual desk we're checking
-				#var desk_index = row * classroom[0].size() + col
-				#if desk_grid.get_child(desk_index) == student and classroom[row][col] == "empty":
-					#return Vector2i(col, row)
-	#else:
-		## Original logic for named desk_grid
-		#for row in classroom.size():
-			#for col in classroom[row].size():
-				#if classroom[row][col] == student.name:
-					#return Vector2i(col, row)
-#
-	#return Vector2i(-1, -1)
-	
 
+func find_valid_path() -> Array:
+	var to_visit = [[player]]  # Array of paths (each path is an array of students)
+	var visited = {}
 	
+	while to_visit:
+		var current_path = to_visit.pop_front()
+		var current = current_path[-1]  # Get last student in current path
+		
+		if current in visited:
+			continue
+			
+		visited[current] = true
+
+		# If we reached the crush, return this path!
+		if current.is_in_group("crush"):
+			return current_path
+			
+		# Get all adjacent students
+		var current_pos = Utils.get_desk_position(current, classroom, desk_grid)
+		var adjacent_positions = Utils.get_adjacent_positions(current_pos, classroom)
+
+		# Check each adjacent student
+		for pos in adjacent_positions:
+			var desk_index = pos.y * classroom[0].size() + pos.x
+			var adjacent_student = desk_grid.get_child(desk_index)
+
+			# Add path to visit if it's a valid student we haven't checked
+			if not adjacent_student.name.begins_with("empty") and \
+				adjacent_student.is_friend and \
+				not visited.has(adjacent_student):
+				var new_path = current_path.duplicate()
+				new_path.append(adjacent_student)
+				to_visit.push_back(new_path)
+	
+	return []
+
 func check_solution(note_chain) -> bool:
-	# Make sure chain starts with player and ends with crush
-	if note_chain[0] == player and note_chain[-1].name == "crush":
-		print("Note passed to crush!!")
+	# Check if there are still unplaced students
+	if friend_placement_panel.get_node("Panel/GridContainer").get_child_count() > 0:
+		return false
+		
+	# Check if all placed students are valid
+	for desk in desk_grid.get_children():
+		if not desk.name.begins_with("empty") and not desk.placement_valid:
+			return false
+	 
+	var valid_path = find_valid_path()
+	if valid_path:
+		note_chain = valid_path  # Set the note chain to this path
+		# Update note trail with new path
+		note_trail.clear_points()
+		for student in note_chain:
+			note_trail.add_point(student.position)
+		current_note_holder = note_chain[-1]
+
+		print("Valid path to crush found!")
 		student_profile_box.set_text("Note passed to crush!!")
 		on_level_complete()
 		return true
@@ -293,11 +322,6 @@ func is_valid_placement(student: Student, target_desk: Student):
 	if student.name == "player" or student.name == "crush":
 		valid = true
 		return valid
-
-	# Check adjacency to current note holder
-	#if not are_desks_adjacent(current_note_holder, target_desk):
-		#print("Not adjacent to note holder")
-		#return false
 		
 	# Check rules - is this redundant if we're calling "validate_all_students"?
 	if level_config["student_configs"].has(student.name):
@@ -339,23 +363,15 @@ func _on_student_clicked(student: Student):
 		var student_profile = level_config["student_configs"][student.name]
 		student_profile_box.set_text(student_profile)
 		student_profile_box.show()
-	# Handle empty desk selection
-	#else:
-		#var valid_desks = get_valid_empty_desks(current_note_holder)
-		#if valid_desks.has(student):
-			#friend_placement_panel.show()  # Show friend selection UI for valid empty desk
 
 func _on_student_placed(student: Student, desk: Student):
 	if student.is_moveable == false:
-		return
-	# Return on turn limit
-	if planner.turn_count+1 >= turn_limit:
-		print("Exceeded turn limit of, ",turn_limit ," turns.")
 		return
 
 	if planner.add_placement(student, desk):
 		#friends.erase(friend_name)  # Remove from available friends
 		friend_placement_panel.remove_icon(student.name)
+		Globals.selected_student = null
 		update_preview()
 	else:
 		print("Can't place student there!")

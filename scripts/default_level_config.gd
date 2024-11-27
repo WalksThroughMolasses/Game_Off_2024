@@ -22,7 +22,7 @@ var level_config = {
 			"description": ["""Won't sit with the twins."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["twin_01", "twin_02", "smelly"],
+					"cant_sit_next_to": ["twin_01", "twin_02", "smelly", "furry"],
 				})
 			]
 		},
@@ -33,7 +33,7 @@ var level_config = {
 							If he's not sitting next to me, he has to be the one to give the note to Nina."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["player_male"],
+					"must_sit_next_to": ["player_male", "player_female"],
 					"cant_sit_next_to": ["smelly"]
 				})
 			]
@@ -45,7 +45,7 @@ var level_config = {
 							If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["player_female"],
+					"must_sit_next_to": ["player_male", "player_female"],
 					"cant_sit_next_to": ["smelly"],
 				})
 			]
@@ -63,14 +63,22 @@ var level_config = {
 		},
 		"posh": { 
 			"name": "Eleanor",
-			"description": ["""She won't help until she finishes her tea. (After turn 2)"""],
-			"rules": []
+			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
+			"rules": [
+				SequenceRule.new({
+					"order": {
+						"chain_index": {
+							3: Globals.Requirement.AFTER
+						}
+					}
+				})
+			]
 		},
 		"furry": {
 			"name": "Dylan",
-			"description": ["""Anyone who's allergic to cats knows not to sit next to him, or they'll start sneezing like crazy.
+			"description": ["""Alice and Alfonso won't sit next to him, because they're allergic to cats.
 							
-							It's unclear if he just happens to own a cat... or if his costume is somehow made of real cat hair."""],
+							It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
 			"rules": [
 			]
 		},
@@ -115,19 +123,27 @@ var level_config = {
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["frog"],
-					"cant_sit_next_to": ["furry"]
+					"cant_sit_next_to": ["furry, smelly"]
 				})
 			]
 		},
 		"bully_01": {
 			"name": "Trent",
 			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"bully_02": {
 			"name": "Brayden",
 			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"sleepy": {
 			"name": "Tala",
@@ -150,7 +166,11 @@ var level_config = {
 		"frog": {
 			"name": "Little Lilypad",
 			"description": ["""Yeah, I'm not sure what to say about this guy."""],
-			"rules": []
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["bully_01", "bully_02"]
+				})
+			]
 		},
 		"headphones": {
 			"name": "Aabria",
@@ -169,8 +189,16 @@ var level_config = {
 			"name": "Albert",
 			"description": ["""I don't know what's up with him, but he's always sick.
 							
-							If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before turn 3)"""],
-			"rules": []
+If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before turn 3)"""],
+			"rules": [
+				SequenceRule.new({
+					"order": {
+						"chain_index": {
+							3: Globals.Requirement.BEFORE
+						}
+					}
+				})
+			]
 		},
 		"crying": {
 			"name": "Billy",

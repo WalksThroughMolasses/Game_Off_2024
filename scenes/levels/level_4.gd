@@ -1,11 +1,11 @@
 var level_config = {
 	"classroom": [
-		["player_female", "bully_02", "bully_01", "player_male"],
+		["player_male", "twin_01", "player_female", "empty"],
+		["empty", "twin_02", "bully_02", "empty"],
 		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "twin_01", "furry"],
-		["empty", "smelly", "empty", "empty"]
+		["empty", "empty", "furry", "empty"]
 	],
-	"friends": ["posh", "crying", "twin_02", "photographer", "frog"],
+	"friends": ["bff_male", "poser", "sick", "smelly", "frog", "bully_01", "crying"],
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
@@ -65,13 +65,10 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 			"name": "Eleanor",
 			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
 			"rules": [
-				AdjacentRule.new({
-					"cant_sit_next_to": ["smelly"]
-				}),
 				SequenceRule.new({
 					"order": {
 						"chain_index": {
-							3: Globals.Requirement.BEFORE
+							3: Globals.Requirement.AFTER
 						}
 					}
 				})
@@ -80,21 +77,19 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		"furry": {
 			"name": "Dylan",
 			"description": ["""Alice and Alfonso won't sit next to him, because they're allergic to cats.
-
+							
 It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
 			"rules": [
 			]
 		},
 		"musician": { 
 			"name": "Xavier",
-			"description": ["""Plays a [s]trumpet[/s] [s]trombone[/s] [s]french horn[/s] brass instrument of some kind in the concert band.
+			"description": ["""Plays a ~~trumpet~~ ~~trombone~~ ~~french horn~~ brass instrument of some sort in the concert band.
 
-He's always practising his scales in class. Ms. Moore hates it, but she can't stop him.
-
-Won't sit next to Ivana after she tipped yoghurt in his horn."""],
+He's always practising his scales in class. Ms. Moore hates it, but she can't stop him."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["smelly", "poser"],
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},
@@ -105,7 +100,7 @@ Won't sit next to Ivana after she tipped yoghurt in his horn."""],
 The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["twin_02"],
+					"must_sit_next_to": ["twin_01"],
 					"can't_sit_next_to": ["smelly"]
 				})
 			]
@@ -128,19 +123,29 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["frog"],
-					"cant_sit_next_to": ["furry"]
+					"cant_sit_next_to": ["furry, smelly"]
 				})
 			]
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Trent's softened up a bit. 
+			
+Billy still refuses to sit next to him. But he'll back up any one else that Brayden picks on."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"bully_02": {
 			"name": "Brayden",
 			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"sleepy": {
 			"name": "Tala",
@@ -162,10 +167,11 @@ Most people aren't going to put up with sitting next to him... But Little Lilypa
 		},
 		"frog": {
 			"name": "Little Lilypad",
-			"description": ["""Jayden and Trent will try to steal his lilypad if he sits next to them."""],
+			"description": ["""Yeah, I'm not sure what to say about this guy."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["bully_01", "bully_02"]
+					"cant_sit_next_to": ["bully_02"],
+					"unless_adjacent": {"bully_02": ["bully_01"]}
 				})
 			]
 		},
@@ -201,7 +207,7 @@ If I want his help, I should get it early, as he's probably going to head to sic
 			"name": "Billy",
 			"description": ["""Pretty sensitive. 
 							
-He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
+							He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_01", "bully_02"],

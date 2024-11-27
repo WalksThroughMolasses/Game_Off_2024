@@ -16,7 +16,7 @@ var level_config = {
 			"name": "Billy",
 			"description": ["""Pretty sensitive. 
 			
-			He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
+He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_01", "bully_02"],
@@ -27,8 +27,8 @@ var level_config = {
 		"headphones": {
 			"name": "Aabria",
 			"description": ["""Always listening to loud music. 
-			
-			Need to make eye contact to get her attention, so can't pass to her from behind."""],
+
+Need to make eye contact to get her attention, so can't pass to her from behind."""],
 			"rules": [
 				SequenceRule.new({
 					"direction": {
@@ -41,7 +41,7 @@ var level_config = {
 			"name": "Clarissa",
 			"description": ["""Twin sister to Contessa. 
 			
-			The twins have to sit together. Not totally sure why. It's just a fact about them."""],
+The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_02"]
@@ -52,22 +52,10 @@ var level_config = {
 			"name": "Contessa",
 			"description": ["""Twin sister to Clarissa. 
 			
-			The twins have to sit together. Not totally sure why. It's just a fact about them."""],
+The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_01"]
-				})
-			]
-		},
-		"bff_male": {
-			"name": "Eugene",
-			"description": ["""My best friend.
-
-							If he's not sitting next to me, he has to be the one to give the note to Nina."""],
-			"rules": [
-				AdjacentRule.new({
-					"must_sit_next_to": ["player_male"],
-					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -75,10 +63,10 @@ var level_config = {
 			"name": "Sophie",
 			"description": ["""My best friend.
 							
-							If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
+If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["player_female"],
+					"must_sit_next_to": ["player_male", "player_female"],
 					"cant_sit_next_to": ["smelly"],
 				})
 			]

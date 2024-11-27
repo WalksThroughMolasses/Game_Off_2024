@@ -10,7 +10,7 @@ func _ready():
 func set_text(student_profile):
 	# just for debug purposes
 	if typeof(student_profile) == TYPE_STRING:
-		student_description.text = student_profile
+		student_description.bbcode_text = student_profile
 	else:
 		student_name.text = student_profile["name"]
 		student_description.text = student_profile["description"][0]

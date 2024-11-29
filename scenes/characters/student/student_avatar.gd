@@ -14,29 +14,11 @@ class_name Avatar
 var grid_position : Vector2i
 var placement_valid = false
 
-signal student_clicked(student)
-
 func _ready():
 	
-	# connect signals
-	connect("student_clicked", level._on_student_clicked)
+	super()
 	
 	character_art = $Control/Panel/CharacterArt
-		
-	# Remove all default button styling
-	flat = true
-
-	# Remove focus visuals
-	focus_mode = Control.FOCUS_NONE
-
-	# Remove default hover effect
-	mouse_default_cursor_shape = Control.CURSOR_ARROW  # Or whatever cursor you want
-
-	# Remove all theme overrides that might add visuals
-	add_theme_stylebox_override("normal", StyleBoxEmpty.new())
-	add_theme_stylebox_override("hover", StyleBoxEmpty.new())
-	add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
-	add_theme_stylebox_override("disabled", StyleBoxEmpty.new())
 
 	var panel_center = Vector2(
 	grid_bg.global_position.x + (grid_bg.size.x / 2),
@@ -45,7 +27,6 @@ func _ready():
 	marker.global_position = panel_center
 	
 	character_art.show()
-
 
 func set_grid_position(pos: Vector2i):
 	grid_position = pos
@@ -95,9 +76,6 @@ func make_crush():
 	
 	self.is_moveable = false
 	self.is_friend = true
-
-func _on_pressed():
-	student_clicked.emit(self)
 
 func receive_note():
 	#note_icon.show()

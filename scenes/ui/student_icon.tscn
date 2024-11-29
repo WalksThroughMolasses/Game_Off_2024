@@ -1,19 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://w5fb1b1f8oq"]
+[gd_scene load_steps=5 format=3 uid="uid://w5fb1b1f8oq"]
 
 [ext_resource type="Theme" uid="uid://c3q6nffwtkoih" path="res://scenes/ui/student_button.tres" id="1_dwo5c"]
 [ext_resource type="Script" path="res://scenes/ui/student_icon.gd" id="2_3vdpv"]
-[ext_resource type="Shader" path="res://scenes/ui/student_icon.gdshader" id="2_evool"]
+[ext_resource type="Texture2D" uid="uid://6b566fek01a8" path="res://assets/sprites/white_circle.png" id="3_kw7oh"]
 [ext_resource type="Texture2D" uid="uid://dtqefctek0y53" path="res://assets/sprites/characters/BFF_01_select.png" id="3_o7sgm"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i0fs"]
-shader = ExtResource("2_evool")
-shader_parameter/border_color = Color(1, 1, 1, 1)
-shader_parameter/border_pixels = 2.0
 
 [node name="StudentIcon" type="Button"]
 custom_minimum_size = Vector2(126, 126)
 theme = ExtResource("1_dwo5c")
 script = ExtResource("2_3vdpv")
+
+[node name="WhiteCircle" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(136, 136)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -68.0
+offset_right = 68.0
+offset_bottom = 68.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_kw7oh")
 
 [node name="CharacterArt" type="TextureRect" parent="."]
 layout_mode = 1
@@ -29,22 +41,6 @@ offset_bottom = 63.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("3_o7sgm")
-
-[node name="Mask" type="ColorRect" parent="."]
-visible = false
-clip_children = 1
-material = SubResource("ShaderMaterial_0i0fs")
-clip_contents = true
-layout_mode = 0
-offset_right = 125.0
-offset_bottom = 125.0
-
-[node name="ColorRect" type="ColorRect" parent="."]
-visible = false
-layout_mode = 0
-offset_top = 128.0
-offset_right = 131.0
-offset_bottom = 170.0
 
 [node name="Label" type="Label" parent="."]
 visible = false
@@ -65,4 +61,3 @@ vertical_alignment = 1
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]
-[connection signal="pressed" from="." to="." method="_on_pressed"]

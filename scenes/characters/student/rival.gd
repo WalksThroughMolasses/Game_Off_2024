@@ -5,8 +5,6 @@ extends Student
 
 var grid_position: Vector2i
 
-signal student_clicked(student)
-
 func _ready():
 	character_art = $Control/CharacterArt
 

@@ -5,12 +5,11 @@ class_name Icon
 
 var debug_on: bool = Globals.debug_on
 
-signal student_clicked(student)
-
 func _ready():
-	
-	# connect signals
-	connect("student_clicked", level._on_student_clicked)
+	#
+	super()
+	## connect signals
+	#connect("student_clicked", level._on_student_clicked)
 	
 	character_art = $CharacterArt
 	
@@ -26,9 +25,9 @@ func _apply_name(student_name):
 		debug_label.show()
 		debug_label.text = student_name
 
-func _on_pressed():
-	print("clicked ", self)
-	student_clicked.emit(self)
+#func _on_pressed():
+	#print("clicked ", self)
+	#student_clicked.emit(self)
 	
 func highlight(_valid: bool):
 	$TextureRect.modulate.a = 1

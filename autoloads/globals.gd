@@ -1,6 +1,8 @@
 extends Node
 
 var debug_on = false
+
+var cursor = load("res://assets/sprites/cursor_V2.png")
 var current_level : int = 1
 var selected_student : Student
 enum Direction { NORTH, SOUTH, EAST, WEST }

@@ -13,8 +13,6 @@ var awaiting_level_advance : bool = false
 @onready var friend_placement_panel = $UI/FriendPlacementPanel
 @onready var note_trail = $UI/NoteTrail
 
-var arrow = load("res://assets/sprites/cursor.png")
-
 @onready var friend_scene : PackedScene = preload("res://scenes/characters/student/friend.tscn")
 @onready var rival_scene : PackedScene = preload("res://scenes/characters/student/rival.tscn")
 @onready var desk_scene : PackedScene = preload("res://scenes/props/desk.tscn")
@@ -25,10 +23,8 @@ var current_note_holder: Student
 
 func _ready():
 	# Load the custom images for the mouse cursor
-	Input.set_custom_mouse_cursor(arrow)
-
-	# Create planner with reference to this level
-	#planner = PlanningController.new(self)  # TODO: how to reset level properly now
+	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
+	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
 
 	# Load level
 	load_level_config()
@@ -344,7 +340,7 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	print("Student being placed: ", student)
 	var student_name = student.name
 	var valid = is_valid_placement(student, target_desk)
-	var grid_pos = target_desk.grid_position
+	#var grid_pos = target_desk.grid_position
 	
 	if student is Icon:
 		friend_placement_panel.remove_icon(student.name)
@@ -362,6 +358,7 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	target_desk.highlight(valid)
 	target_desk.set_student_name(student_name)
 	target_desk.empty_desk = false
+	target_desk.grab_focus()
 
 	current_note_holder = target_desk
 

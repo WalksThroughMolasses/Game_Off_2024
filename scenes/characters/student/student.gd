@@ -57,12 +57,15 @@ const character_icon_textures = {
 @onready var drag_preview_scene = preload("res://scenes/ui/drag_preview.tscn")
 
 @onready var level = get_node("/root/Level")
+@onready var pressed_connection = pressed.connect(_on_pressed)
 
 signal student_dragged(student)
+signal student_clicked(student)
 
 func _ready():
 	# connect signals
 	connect("student_dragged", level._on_student_dragged)
+	connect("student_clicked", level._on_student_clicked)
 
 func set_student_name(student_name: String):
 	self.name = student_name
@@ -71,19 +74,19 @@ func set_student_name(student_name: String):
 func _apply_name(_name: String):
 	pass # placeholder function - logic is handled in friend.gd
 	
-func _get_drag_data(at_position : Vector2):
-	var data = {}
-	data["student"] = self
+func _on_pressed():
+	student_clicked.emit(self)
+	
+func _get_drag_data(_at_position : Vector2):
+	student_clicked.emit(self) # treat drag the same as click
 	
 	if is_friend && is_moveable:
-		
+
 		character_art.modulate.a = 0.5
-		
+
 		var drag_preview = drag_preview_scene.instantiate()
 		drag_preview.get_node("CharacterArt").texture = character_icon_textures[self.name]
 		drag_preview.selected_student = self
 		level.get_node("UI").add_child(drag_preview)
-		
-		student_dragged.emit(self)
 
-	return data
+		student_dragged.emit(self)

@@ -7,6 +7,11 @@ var level_config = {
 	],
 	"friends": ["bff_female", "headphones", "twin_01", "crying"],
 	"student_configs": {
+		"player_female": {
+			"name": "Nina",
+			"description": ["""It me."""],
+			"rules": []
+		},
 		"player_male": {
 			"name": "Bobby",
 			"description": ["""<3"""],

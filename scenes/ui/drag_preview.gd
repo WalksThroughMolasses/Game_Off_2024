@@ -29,7 +29,6 @@ func _process(_delta):
 		queue_free()
 	
 func _on_area_2d_area_entered(area):
-	print("highlighting: ", area.get_parent())
 	drop_target = area.get_parent()
 	if drop_target is Student:
 		if drop_target.empty_desk:

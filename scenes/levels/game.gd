@@ -25,21 +25,28 @@ func _ready():
 	# Load the custom images for the mouse cursor
 	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
-
+	
 	# Load level
 	load_level_config()
 	setup_level()
 	
 func _input(event):
-		
+	
+	# Advance level TODO: pop-up box handles this as well
 	if awaiting_level_advance and event.is_action_pressed("ui_accept"):
 		awaiting_level_advance = false
 		Globals.current_level += 1
 		load_level_config()
 		reset_and_setup_level()
 	
+	if event.is_action_pressed("click"):
+		Input.set_custom_mouse_cursor(Globals.cursor_small, Input.CURSOR_ARROW)
+		Input.set_custom_mouse_cursor(Globals.cursor_small, Input.CURSOR_FORBIDDEN)
+	
 	if event.is_action_released("click"):
 		Globals.selected_student = null
+		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
+		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
 
 func setup_level():
 	# Clear placeholder grid
@@ -172,6 +179,29 @@ func find_valid_path() -> Array:
 				to_visit.push_back(new_path)
 	
 	return []
+	
+func note_passing_animation(note_chain: Array, delay: float = 0.2):
+	var note_animation = note_trail.get_node("Animation")
+	var tween: Tween
+
+	note_animation.show()
+
+	for i in range(note_chain.size()):
+		var current_student = note_chain[i]
+		note_animation.position = current_student.position
+		await get_tree().create_timer(delay).timeout
+		await current_student.shake(0.2, 3.0)
+
+		# If there's a next student, tween to their position
+		if i < note_chain.size() - 1:
+			var next_student = note_chain[i + 1]
+			# Kill previous tween if it exists
+			if tween:
+				tween.kill()
+			# Create new tween
+			tween = create_tween()
+			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT)
+			await tween.finished
 
 func check_solution(note_chain) -> bool:
 	# Check if there are still unplaced students
@@ -190,125 +220,107 @@ func check_solution(note_chain) -> bool:
 		note_trail.clear_points()
 		for student in note_chain:
 			note_trail.add_point(student.position)
+			note_passing_animation(note_chain)
 		current_note_holder = note_chain[-1]
 
 		print("Valid path to crush found!")
-		student_profile_box.set_text("Note passed to crush!!")
+		student_profile_box.set_text("Note passed to crush!!", "")
 		on_level_complete()
 		return true
 	return false
 	
 func calculate_note_chain():
-	note_trail.clear_points() # clear existing points
-	var note_chain = [player]  # Start with player node
+	note_trail.clear_points()
+	var note_chain = [player]
 	var current_holder = player
 	var valid_chain = true
+
 	while valid_chain:
-		valid_chain = false  # Reset flag
-		# Get current holder's position
+		valid_chain = false
 		var holder_pos = Utils.get_desk_position(current_holder, classroom, desk_grid)
 		var adjacent_positions = Utils.get_adjacent_positions(holder_pos, classroom)
-		# Check each adjacent position
+
 		for pos in adjacent_positions:
 			var desk_index = pos.y * classroom[0].size() + pos.x
 			var adjacent_student = desk_grid.get_child(desk_index)
-			# Skip if: empty desk, already in chain, or invalid (highlighted red)
+
 			if adjacent_student.name.begins_with("empty") or \
 				not adjacent_student.is_friend or \
 				note_chain.has(adjacent_student) or \
 				not adjacent_student.placement_valid:
 				continue
-			
-			# Check sequence rules before adding to chain
-			if level_config["student_configs"].has(adjacent_student.name):
-				var student_config = level_config["student_configs"][adjacent_student.name]
+
+			# Check sequence rules
+			if student_configs.has(adjacent_student.name):
+				var student_config = student_configs[adjacent_student.name]
 				if student_config.has("rules"):
 					var sequence_valid = true
 					for rule in student_config.rules:
 						if rule is SequenceRule:
-							print("Found sequence rule for: ", adjacent_student.name)
 							var temp_chain = note_chain.duplicate()
 							temp_chain.append(adjacent_student)
-							var result = rule.check_valid(adjacent_student, temp_chain, classroom, desk_grid)
-							print("Sequence rule check result: ", result)
+							var result = rule.check_valid(adjacent_student, temp_chain, classroom, desk_grid, student_configs)
 							if not result.valid:
 								sequence_valid = false
-								print("Failed sequence rule check")
+								adjacent_student.invalid_reason = result.reason
 								adjacent_student.highlight(false)
 								break
 					if not sequence_valid:
-						continue  # Skip this student if they break sequence rules
+						continue
 
 			# Valid next note holder found
 			current_holder = adjacent_student
 			note_chain.append(adjacent_student)
-			valid_chain = true  # Continue the chain
+			valid_chain = true
 			break
-			
+
 	# Update Note Trail
 	for student in note_chain:
 		note_trail.add_point(student.position)
-				
-	# Set current note holder to last student in chain
+
 	current_note_holder = note_chain[-1]
-	print("Current note chain: ", note_chain)
+	return check_solution(note_chain)
 	
-	check_solution(note_chain)
-	
-func validate_all_students() -> bool:
-	var all_valid = true
-	for desk in desk_grid.get_children():
-		# Skip empty desks or unplaceable students (not friends)
-		if desk.name.begins_with("empty") or !desk.is_friend:
-			continue
-
-		# Check student adjacent rules
-		var student_valid = true
-		if level_config["student_configs"].has(desk.name):
-			var student_config = level_config["student_configs"][desk.name]
-			if student_config.has("rules"):
-				for rule in student_config.rules:
-					if rule is AdjacentRule:
-						var result = rule.check_valid(desk, desk, classroom, desk_grid)
-						if not result.valid:
-							student_valid = false
-							all_valid = false
-							break
-
-		# Update highlight based on validation result
-		desk.highlight(student_valid)
-
-	return all_valid
-
-func is_valid_placement(student: Student, target_desk: Student):
-	
-	var valid = true
-	
-	# Check if it's empty
-	if not target_desk.name.begins_with("empty"):
-		print("Desk not empty")
-		valid = true
-		return valid
-	
-	# Bypass check if it's player or crush
+func check_adjacent_rules(student: Student, desk: Student) -> Dictionary:
+   # Skip for special students
 	if student.name == "player" or student.name == "crush":
-		valid = true
-		return valid
-		
-	# Check rules - is this redundant if we're calling "validate_all_students"?
-	if level_config["student_configs"].has(student.name):
-		var student_config = level_config["student_configs"][student.name]
+		return {"valid": true}
+	   
+   ## Check if desk is occupied  - not needed, can't place on occupied desk anyway
+	#if not desk.name.begins_with("empty") and desk != student:
+		#return {"valid": false, "reason": "Desk is already occupied"}
+
+   # Check adjacent rules
+	if student_configs.has(student.name):
+		var student_config = student_configs[student.name]
 		if student_config.has("rules"):
 			for rule in student_config.rules:
 				if rule is AdjacentRule:
-					var result = rule.check_valid(student, target_desk, classroom, desk_grid)
-					print("Rule check result: ", result)
+					var result = rule.check_valid(student, desk, classroom, desk_grid, student_configs)
 					if not result.valid:
-						print("Highlighting student: ", student)
-						#target_desk.highlight(false)
-						valid = false
-	
-	return valid
+						return result				
+	return {"valid": true}
+
+func is_valid_placement(student: Student, target_desk: Student) -> bool:
+	var result = check_adjacent_rules(student, target_desk)
+	if not result.valid:
+		student.invalid_reason = result.reason
+		if student is Avatar:
+			student.highlight(false)
+	return result.valid
+
+func validate_all_students() -> bool:
+	var all_valid = true
+	for desk in desk_grid.get_children():
+		if desk.name.begins_with("empty") or !desk.is_friend:
+			continue
+		   
+		var result = check_adjacent_rules(desk, desk)
+		desk.invalid_reason = result.get("reason", "")
+		desk.highlight(result.valid)
+		if not result.valid:
+			all_valid = false
+	return all_valid
 
 func get_valid_empty_desks(student: Student) -> Array:
 	var valid_desks = []
@@ -325,14 +337,15 @@ func get_valid_empty_desks(student: Student) -> Array:
 func update_classroom_array(desk: Student, student_name: String):
 	var desk_pos = Utils.get_desk_position(desk, classroom, desk_grid)
 	classroom[desk_pos.y][desk_pos.x] = String(student_name)
-	print(classroom)
 
 func _on_student_clicked(student: Student):
 	# Show profile for existing desk_grid
 	if not student.name.begins_with("empty"): # and not "player" in student.name
 		#Globals.selected_student = student
 		var student_profile = level_config["student_configs"][student.name]
-		student_profile_box.set_text(student_profile)
+		student_profile_box.set_text(student_profile, student.invalid_reason)
+		# check student placement is valid?
+		
 		print(student_profile)
 		#student_profile_box.show()
 
@@ -343,9 +356,11 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	#var grid_pos = target_desk.grid_position
 	
 	if student is Icon:
+		# icon has been placed in classroom
 		friend_placement_panel.remove_icon(student.name)
 	elif student is Avatar:
 		var current_pos = Utils.get_desk_position(student, classroom, desk_grid)
+		# student has been placed back in the placement panel
 		if current_pos != Vector2i(-1, -1):
 			classroom[current_pos.y][current_pos.x] = "empty"
 		student.set_desk_empty()
@@ -367,7 +382,10 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	calculate_note_chain()
 	update_preview()
 	
-	print(classroom)
+	# Update character profile with validity check feedback - we do this after all rule check validation
+	if target_desk.empty_desk == false:
+		var student_profile = level_config["student_configs"][target_desk.name]
+		student_profile_box.set_text(student_profile, target_desk.invalid_reason)
 		
 func _on_student_dragged(student: Student):
 	# what's the target desk?

@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2h1w8o1euxt7"]
+[gd_scene load_steps=8 format=3 uid="uid://c2h1w8o1euxt7"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_lb7do"]
 [ext_resource type="PackedScene" uid="uid://dxvc5c0vamwj6" path="res://scenes/ui/student_profiles.tscn" id="2_gbguh"]
 [ext_resource type="Texture2D" uid="uid://bekqrpvffr8e" path="res://assets/sprites/blue_notebook.png" id="2_h2kyq"]
-[ext_resource type="Texture2D" uid="uid://6b566fek01a8" path="res://assets/sprites/white_circle.png" id="3_ugii8"]
 [ext_resource type="PackedScene" uid="uid://rigwdxim0qjj" path="res://scenes/ui/undo.tscn" id="3_yx8e2"]
 [ext_resource type="PackedScene" uid="uid://duptby1txs1cw" path="res://scenes/ui/redo.tscn" id="6_5y2ll"]
 [ext_resource type="PackedScene" uid="uid://biyc8f3r36iah" path="res://scenes/ui/friend_placement_panel.tscn" id="7_yim3n"]
@@ -44,11 +43,6 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_ctu0h")
 width = 73.0
 default_color = Color(0.517647, 0.607843, 1, 1)
 joint_mode = 1
-
-[node name="Animation" type="Sprite2D" parent="UI/NoteTrail"]
-visible = false
-modulate = Color(0.517647, 0.607843, 1, 1)
-texture = ExtResource("3_ugii8")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI"]
 visible = false

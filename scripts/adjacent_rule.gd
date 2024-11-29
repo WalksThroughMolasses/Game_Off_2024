@@ -6,15 +6,11 @@ var config: Dictionary
 func _init(rule_config: Dictionary = {}):
 	config = rule_config
 	
-func check_valid(student: Student, target_desk: Student, classroom: Array, desk_grid: Node) -> Dictionary:
+func check_valid(student: Student, target_desk: Student, classroom: Array, desk_grid: Node, student_configs: Dictionary) -> Dictionary:
 	var result = {"valid": true, "reason": ""}
 
 	print("Checking adjacency for ", student.name)
 	print("Config: ", config)
-	
-	#if not config.has("cant_sit_next_to"):
-		#print("No cant_sit_next_to rules defined")
-		#return result
 	
 	var target_pos = Utils.get_desk_position(target_desk, classroom, desk_grid)
 	print("Target position: ", target_pos)  # Add this
@@ -43,12 +39,12 @@ func check_valid(student: Student, target_desk: Student, classroom: Array, desk_
 
 					if not has_support:
 						result.valid = false
-						result.reason = "Can't sit next to " + adjacent_student.name + " without support"
+						result.reason = "Can't sit next to " + student_configs[adjacent_student.name]["name"] + " without support."
 						return result
 				else:
 					# No unless condition, straight invalid
 					result.valid = false
-					result.reason = "Can't sit next to " + adjacent_student.name
+					result.reason = "Can't sit next to " + student_configs[adjacent_student.name]["name"] + "."
 					return result
 
 	# Check required adjacencies (OR condition)
@@ -64,7 +60,13 @@ func check_valid(student: Student, target_desk: Student, classroom: Array, desk_
 
 		if not found_required:
 			result.valid = false
-			result.reason = "Must sit next to at least one of: " + str(config.must_sit_next_to)
+			var name1 = student_configs[config.must_sit_next_to[0]]["name"]
+			var name2 = student_configs[config.must_sit_next_to[1]]["name"] if config.must_sit_next_to.size() > 1 else ""
+
+			if name2:
+				result.reason = "Must sit next to " + name1 + " or " + name2  +  "."
+			else:
+				result.reason = "Must sit next to " + name1 +  "."
 			return result
 
 	return result

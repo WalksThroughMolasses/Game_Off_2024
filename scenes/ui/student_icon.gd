@@ -30,11 +30,13 @@ func _apply_name(student_name):
 	#student_clicked.emit(self)
 	
 func highlight(_valid: bool):
-	$TextureRect.modulate.a = 1
+	pass
+	#$TextureRect.modulate.a = 1
 	print("It's the icon!")
 	#
 func unhighlight(_valid: bool):
-	$TextureRect.modulate.a = 0
+	pass
+	#$TextureRect.modulate.a = 0
 
 #func _on_mouse_entered():
 	#print("mouse")

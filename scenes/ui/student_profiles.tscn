@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dxvc5c0vamwj6"]
+[gd_scene load_steps=20 format=3 uid="uid://dxvc5c0vamwj6"]
 
 [ext_resource type="Script" path="res://scenes/ui/student_profiles.gd" id="1_q1djf"]
 [ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="2_2lxh6"]
 [ext_resource type="FontFile" uid="uid://c4ehg0t3jwge4" path="res://assets/fonts/ArchivoBlack-Regular.ttf" id="3_1vjxm"]
 [ext_resource type="FontFile" uid="uid://dopn3xodp60oy" path="res://assets/fonts/LUCON.TTF" id="3_j4sg4"]
 [ext_resource type="FontFile" uid="uid://cl251hht55k4s" path="res://assets/fonts/ArchivoNarrow-Italic-VariableFont_wght.ttf" id="4_cq8v5"]
+[ext_resource type="Texture2D" uid="uid://bdvv7y2bjdo2n" path="res://assets/sprites/Sticky_Tape.png" id="6_6b6yw"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wryvs"]
 bg_color = Color(1, 0.698039, 0.831373, 1)
@@ -178,5 +179,16 @@ theme_override_colors/font_hover_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("3_j4sg4")
 theme_override_font_sizes/font_size = 36
 text = "PASS NOTE"
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -157.0
+offset_top = -41.0
+offset_right = 157.0
+grow_horizontal = 2
+texture = ExtResource("6_6b6yw")
 
 [connection signal="pressed" from="Panel/MarginContainer/CloseProfile" to="." method="_on_close_profile_pressed"]

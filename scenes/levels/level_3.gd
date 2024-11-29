@@ -71,7 +71,7 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 				SequenceRule.new({
 					"order": {
 						"chain_index": {
-							3: Globals.Requirement.BEFORE
+							3: Globals.Requirement.AFTER
 						}
 					}
 				})
@@ -124,7 +124,7 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"photographer": {
 			"name": "Alfonso",
-			"description": ["""Only agreed to help if he can sit behind Little Lilypad, so he can take a picture for National Geographic."""],
+			"description": ["""Only agreed to help if he can sit next to Little Lilypad, so he can take a picture for National Geographic."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["frog"],

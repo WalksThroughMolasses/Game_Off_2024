@@ -5,6 +5,7 @@ var has_note : bool = false
 var empty_desk : bool = false
 var is_moveable: bool = false
 var is_friend: bool = false
+var invalid_reason : String = ""
 var character_art
 var drop_target
 
@@ -33,7 +34,7 @@ const character_textures = {
 }
 
 const character_icon_textures = {
-	"photographer": preload("res://assets/sprites/characters/Photographer.png"),
+	"photographer": preload("res://assets/sprites/characters/Photographer_select.png"),
 	"bff_female": preload("res://assets/sprites/characters/BFF_01_select.png"),
 	"bff_male": preload("res://assets/sprites/characters/BFF_02_select.png"),
 	"bully_01": preload("res://assets/sprites/characters/Bully_01_select.png"),
@@ -80,7 +81,7 @@ func _on_pressed():
 func _get_drag_data(_at_position : Vector2):
 	student_clicked.emit(self) # treat drag the same as click
 	
-	if is_friend && is_moveable:
+	if is_friend && is_moveable && !empty_desk:
 
 		character_art.modulate.a = 0.5
 

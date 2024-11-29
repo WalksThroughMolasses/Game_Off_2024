@@ -12,12 +12,35 @@ enum Requirement {
 	AFTER = Globals.Requirement.AFTER 
 }
 
+const DIRECTION_NAMES = {
+	Direction.NORTH: "behind",
+	Direction.SOUTH: "in front",
+	Direction.EAST: "the left",
+	Direction.WEST: "the right"
+}
+
 var config: Dictionary
 
 func _init(rule_config: Dictionary = {}):
 	config = rule_config
+	
+func get_readable_directions(directions: Array) -> String:
+	if directions.size() == 0:
+		return ""
+	
+	var readable_dirs = []
+	for dir in directions:
+		readable_dirs.append(DIRECTION_NAMES[dir])
+	
+	if readable_dirs.size() == 1:
+		return readable_dirs[0]
+	elif readable_dirs.size() == 2:
+		return readable_dirs[0] + " or " + readable_dirs[1]
+	else:
+		var last = readable_dirs.pop_back()
+		return ", ".join(readable_dirs) + ", or " + last
 
-func check_valid(student: Student, note_chain: Array, classroom: Array, desk_grid: Node) -> Dictionary:
+func check_valid(student: Student, note_chain: Array, classroom: Array, desk_grid: Node, student_configs: Dictionary) -> Dictionary:
 	var result = {"valid": true, "reason": ""}
 	
 	# Get student's position in chain
@@ -33,7 +56,10 @@ func check_valid(student: Student, note_chain: Array, classroom: Array, desk_gri
 				var direction = get_receive_from_direction(prev_student, student, classroom, desk_grid)
 				if config.direction.cant_receive_from.has(direction):
 					result.valid = false
-					result.reason = "Can't receive note from " + str(direction)
+					if typeof(config.direction.cant_receive_from) == TYPE_ARRAY:
+						result.reason = "Can't receive note from " + get_readable_directions(config.direction.cant_receive_from) +  "."
+					else:
+						result.reason = "Can't receive note from " + DIRECTION_NAMES[direction] +  "."
 					return result
 					
 		if config.direction.has("must_receive_from"):
@@ -42,7 +68,10 @@ func check_valid(student: Student, note_chain: Array, classroom: Array, desk_gri
 				var direction = get_receive_from_direction(prev_student, student, classroom, desk_grid)
 				if not config.direction.must_receive_from.has(direction):
 					result.valid = false
-					result.reason = "Must receive note from " + str(config.direction.must_receive_from)
+					if typeof(config.direction.must_receive_from) == TYPE_ARRAY:
+						result.reason = "Must receive note from " + get_readable_directions(config.direction.must_receive_from) +  "."
+					else:
+						result.reason = "Must receive note from " + DIRECTION_NAMES[direction] +  "."
 					return result
 				
 	# Check order rules relative to other students
@@ -61,11 +90,11 @@ func check_valid(student: Student, note_chain: Array, classroom: Array, desk_gri
 						Requirement.BEFORE:
 							if student_index > other_index:
 								result.valid = false
-								result.reason = "Must receive note before " + other_student
+								result.reason = "Must receive note before " + student_configs[other_student]["name"]
 						Requirement.AFTER:
 							if student_index < other_index:
 								result.valid = false
-								result.reason = "Must receive note after " + other_student
+								result.reason = "Must receive note after " + student_configs[other_student]["name"]
 						
 		# Check chain index requirements
 		if config.order.has("chain_index"):

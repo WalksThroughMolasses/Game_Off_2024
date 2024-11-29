@@ -1,9 +1,10 @@
-[gd_scene load_steps=14 format=3 uid="uid://b6jilagiy0cko"]
+[gd_scene load_steps=15 format=3 uid="uid://b6jilagiy0cko"]
 
 [ext_resource type="Script" path="res://scenes/characters/student/student_avatar.gd" id="1_1dwn7"]
 [ext_resource type="PackedScene" uid="uid://cqqhk7ios8dcn" path="res://scenes/props/desk.tscn" id="2_gmhdo"]
 [ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="3_ajofj"]
 [ext_resource type="Texture2D" uid="uid://fd7xk3ma0eo5" path="res://assets/sprites/characters/Player_Female.png" id="3_wrgr4"]
+[ext_resource type="Texture2D" uid="uid://bfpn3ryc6oiju" path="res://assets/sprites/heart.png" id="5_4o8nh"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7n1q"]
 
@@ -148,6 +149,17 @@ vertical_alignment = 1
 
 [node name="Marker2D" type="Marker2D" parent="Control/Panel"]
 position = Vector2(100, 100)
+
+[node name="Heart" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = -15.0
+offset_right = 15.0
+grow_horizontal = 0
+texture = ExtResource("5_4o8nh")
 
 [node name="Area2D" type="Area2D" parent="."]
 

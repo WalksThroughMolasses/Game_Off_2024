@@ -5,6 +5,7 @@ class_name Avatar
 
 @onready var debug_label = $Control/Panel/Label
 @onready var marker = $Control/Panel/Marker2D
+@onready var heart = $Control/Heart
 
 # colors
 @export var highlight_valid_placement := Color("#FFE375FF")
@@ -51,6 +52,29 @@ func _apply_name(student_name):
 		character_art.show()
 		
 		debug_label.text = student_name
+		
+func shake(duration: float = 0.3, strength: float = 3.0):
+	var start_pos = self.position
+	var elapsed_time = 0.0
+	var shake_interval = 0.05  # Change position every 0.05 seconds
+	var time_since_last_shake = 0.0
+	
+	while elapsed_time < duration:
+		elapsed_time += get_process_delta_time()
+		time_since_last_shake += get_process_delta_time()
+		
+		if time_since_last_shake >= shake_interval:
+			var offset = Vector2(
+				randf_range(-strength, strength),
+				randf_range(-strength, strength)
+			)
+			self.position = start_pos + offset
+			time_since_last_shake = 0.0
+			
+		await get_tree().process_frame
+		
+	# Reset to original position
+	self.position = start_pos
 
 func set_desk_empty():
 	empty_desk = true
@@ -73,6 +97,8 @@ func make_crush():
 	#character_art.texture = character_textures["crush"]
 	self.add_to_group("crush")
 	self.remove_from_group("player")
+	
+	heart.show()
 	
 	self.is_moveable = false
 	self.is_friend = true

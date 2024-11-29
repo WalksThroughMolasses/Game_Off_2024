@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://s80us0xrk3uq"]
+
+[ext_resource type="Texture2D" uid="uid://f0bm6fyft85v" path="res://assets/sprites/start.png" id="1_jeenl"]
+[ext_resource type="Texture2D" uid="uid://dpb7rb68bf3p6" path="res://assets/sprites/start_pressed.png" id="2_tkhmf"]
+[ext_resource type="Script" path="res://scenes/ui/start.gd" id="3_mebrh"]
+
+[node name="Start" type="TextureButton"]
+offset_right = 8.0
+offset_bottom = 8.0
+texture_normal = ExtResource("1_jeenl")
+texture_pressed = ExtResource("2_tkhmf")
+script = ExtResource("3_mebrh")
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

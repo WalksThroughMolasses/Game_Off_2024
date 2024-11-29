@@ -65,6 +65,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 			"name": "Eleanor",
 			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
 			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
+				}),
 				SequenceRule.new({
 					"order": {
 						"chain_index": {
@@ -80,6 +83,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 							
 It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
 			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
+				}),
 			]
 		},
 		"musician": { 
@@ -155,6 +161,7 @@ I'd have to wake her up to get any help from her. No easy feat."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["musician"],
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},
@@ -200,6 +207,9 @@ If I want his help, I should get it early, as he's probably going to head to sic
 							3: Globals.Requirement.BEFORE
 						}
 					}
+				}),
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},
@@ -207,10 +217,10 @@ If I want his help, I should get it early, as he's probably going to head to sic
 			"name": "Billy",
 			"description": ["""Pretty sensitive. 
 							
-							He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
+He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["bully_01", "bully_02"],
+					"cant_sit_next_to": ["bully_01", "bully_02", "smelly"],
 					"unless_adjacent": {"bully_01": ["shakas"], "bully_02": ["shakas"]}
 				})
 			]

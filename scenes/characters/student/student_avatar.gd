@@ -1,30 +1,8 @@
 extends Student
-
-const character_textures = {
-	"photographer": preload("res://assets/sprites/characters/Photographer.png"),
-	"bff_female": preload("res://assets/sprites/characters/BFF_01.png"),
-	"bff_male": preload("res://assets/sprites/characters/BFF_02.png"),
-	"bully_01": preload("res://assets/sprites/characters/Bully_01.png"),
-	"bully_02": preload("res://assets/sprites/characters/Bully_02.png"),
-	"player_male": preload("res://assets/sprites/characters/Player_Male.png"),
-	"crying": preload("res://assets/sprites/characters/Crying.png"),
-	"frog": preload("res://assets/sprites/characters/Frog.png"),
-	"furry": preload("res://assets/sprites/characters/Furry.png"),
-	"musician": preload("res://assets/sprites/characters/Musician.png"),
-	"headphones": preload("res://assets/sprites/characters/Headphones.png"),
-	"player_female": preload("res://assets/sprites/characters/Player_Female.png"),
-	"poser": preload("res://assets/sprites/characters/Poser.png"),
-	"posh": preload("res://assets/sprites/characters/Posh.png"),
-	"shakas": preload("res://assets/sprites/characters/Shakas.png"),
-	"sick": preload("res://assets/sprites/characters/Sick.png"),
-	"sleepy": preload("res://assets/sprites/characters/Sleepy.png"),
-	"smelly": preload("res://assets/sprites/characters/Smelly.png"),
-	"twin_01": preload("res://assets/sprites/characters/TwinA.png"),
-	"twin_02": preload("res://assets/sprites/characters/TwinB.png")
-}
+class_name Avatar
 
 @onready var grid_bg = $Control/Panel/GridBG
-@onready var character_art = $Control/Panel/CharacterArt
+
 @onready var debug_label = $Control/Panel/Label
 @onready var marker = $Control/Panel/Marker2D
 
@@ -34,12 +12,16 @@ const character_textures = {
 @export var highlight_immovable := Color("#A2C4E3FF")
 
 var grid_position : Vector2i
-var is_friend: bool = false
 var placement_valid = false
 
-signal student_placed(student, seat_position)
+signal student_clicked(student)
 
 func _ready():
+	
+	# connect signals
+	connect("student_clicked", level._on_student_clicked)
+	
+	character_art = $Control/Panel/CharacterArt
 		
 	# Remove all default button styling
 	flat = true
@@ -55,11 +37,6 @@ func _ready():
 	add_theme_stylebox_override("hover", StyleBoxEmpty.new())
 	add_theme_stylebox_override("pressed", StyleBoxEmpty.new())
 	add_theme_stylebox_override("disabled", StyleBoxEmpty.new())
-	
-	# connect signals
-	var level = get_node("/root/Level") # or however your scene is structured
-	connect("student_clicked", level._on_student_clicked)
-	connect("student_placed", level._on_student_placed)
 
 	var panel_center = Vector2(
 	grid_bg.global_position.x + (grid_bg.size.x / 2),
@@ -67,8 +44,8 @@ func _ready():
 	)
 	marker.global_position = panel_center
 	
-	#if !is_moveable:
-		#grid_bg.modulate = highlight_immovable
+	character_art.show()
+
 
 func set_grid_position(pos: Vector2i):
 	grid_position = pos
@@ -91,13 +68,15 @@ func _apply_name(student_name):
 
 		character_art.texture = character_textures[student_name]
 		character_art.show()
-		self.name = student_name
+		
 		debug_label.text = student_name
 
 func set_desk_empty():
 	empty_desk = true
 	is_moveable = true
 	is_friend = true
+	self.name = "empty"
+	self.highlight(true)
 	character_art.hide()
 	debug_label.hide()
 
@@ -118,12 +97,7 @@ func make_crush():
 	self.is_friend = true
 
 func _on_pressed():
-	if empty_desk:
-		if Globals.selected_student:
-			print("Seating student: ", Globals.selected_student)
-			student_placed.emit(Globals.selected_student, self)
-	else:		
-		student_clicked.emit(self)
+	student_clicked.emit(self)
 
 func receive_note():
 	#note_icon.show()
@@ -153,17 +127,24 @@ func highlight(valid: bool) -> void:
 #func unhighlight():
 	##grid_bg.hide()
 	#grid_bg.modulate.a = 0
-#
-#func _on_mouse_entered():
-	#if has_note:
-		#return
-	#else:
-		#var tween = create_tween()
-		#tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
-#
-#func _on_mouse_exited():
-	#if has_note:
-		#return
-	#else:
-		#var tween = create_tween()
-		#tween.tween_property(self, "modulate", Color.WHITE, 0.05)
+	
+func show_preview(student_name):
+	character_art.texture = character_textures[student_name]
+	character_art.modulate.a = 0.5
+	character_art.show()
+	
+func hide_preview():
+	character_art.texture = character_textures["empty_desk"]
+	character_art.modulate.a = 1
+	character_art.hide()
+
+func _on_mouse_entered():
+	if empty_desk && Globals.selected_student:
+		print("empty? ", empty_desk)
+		print(Globals.selected_student)
+		var tween = create_tween()
+		tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
+
+func _on_mouse_exited():
+	var tween = create_tween()
+	tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.05)

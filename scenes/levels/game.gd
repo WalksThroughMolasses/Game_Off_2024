@@ -2,7 +2,6 @@ extends Node2D
 
 var debug_on: bool = Globals.debug_on
 
-var planner: PlanningController
 var level_config: Dictionary
 var student_configs : Dictionary
 var classroom : Array
@@ -29,30 +28,22 @@ func _ready():
 	Input.set_custom_mouse_cursor(arrow)
 
 	# Create planner with reference to this level
-	planner = PlanningController.new(self)
+	#planner = PlanningController.new(self)  # TODO: how to reset level properly now
 
 	# Load level
 	load_level_config()
 	setup_level()
 	
-	# Hide student profile box
-	#student_profile_box.hide()
-	
 func _input(event):
-	if event.is_action_pressed("undo"):
-		planner.undo()
-		update_preview()
-	elif event.is_action_pressed("redo"):
-		planner.redo()
-		update_preview()
-	#elif event.is_action_pressed("ui_accept"):
-		#return
 		
 	if awaiting_level_advance and event.is_action_pressed("ui_accept"):
 		awaiting_level_advance = false
 		Globals.current_level += 1
 		load_level_config()
 		reset_and_setup_level()
+	
+	if event.is_action_released("click"):
+		Globals.selected_student = null
 
 func setup_level():
 	# Clear placeholder grid
@@ -83,7 +74,7 @@ func setup_level():
 	_on_student_clicked(friend_placement_panel.get_node("Panel/GridContainer").get_children()[0])
 
 	# init planning phase
-	planner.start_planning()
+	#planner.start_planning()
 
 	# Update initial highlights
 	update_preview()
@@ -136,22 +127,9 @@ func update_preview() -> void:
 	# Debug prints
 	if debug_on:
 		print("\n--- Updating Preview ---")
-		print("Current index: ", planner.current_index)
 		print("Current note holder: ", current_note_holder.name)
 		print("Classroom state: ", classroom)
-	
-	# Calculate and show valid moves - might make this a debug feature later
-	#var valid_moves = get_valid_empty_desks(current_note_holder)
-	#for valid_desk in valid_moves:
-		#valid_desk.highlight(true) # valid = true
-		
-	
-		
-	# Update turn count
-	print("Turn: ", planner.turn_count+1) 
-	#turn_counter.update(planner.turn_count+1)
 
-	# Show note icon for current holder
 	current_note_holder.receive_note()
 
 func seat_student(student_name):
@@ -161,8 +139,6 @@ func seat_student(student_name):
 	
 	# Name student
 	student.set_student_name(student_name)
-
-	# Lock movement (characters placed at start of game cannot be moved)
 	student.highlight(true)
 
 func find_valid_path() -> Array:
@@ -178,7 +154,7 @@ func find_valid_path() -> Array:
 			
 		visited[current] = true
 
-		# If we reached the crush, return this path!
+		# If we reached the crush, return this path
 		if current.is_in_group("crush"):
 			return current_path
 			
@@ -227,6 +203,7 @@ func check_solution(note_chain) -> bool:
 	return false
 	
 func calculate_note_chain():
+	note_trail.clear_points() # clear existing points
 	var note_chain = [player]  # Start with player node
 	var current_holder = player
 	var valid_chain = true
@@ -273,7 +250,6 @@ func calculate_note_chain():
 			break
 			
 	# Update Note Trail
-	note_trail.clear_points() # clear existing points
 	for student in note_chain:
 		note_trail.add_point(student.position)
 				
@@ -352,44 +328,70 @@ func get_valid_empty_desks(student: Student) -> Array:
 	
 func update_classroom_array(desk: Student, student_name: String):
 	var desk_pos = Utils.get_desk_position(desk, classroom, desk_grid)
-	classroom[desk_pos.y][desk_pos.x] = student_name
+	classroom[desk_pos.y][desk_pos.x] = String(student_name)
 	print(classroom)
 
 func _on_student_clicked(student: Student):
-	
 	# Show profile for existing desk_grid
-	if not student.name.begins_with("empty") and not student.name == "player":
-		Globals.selected_student = student
+	if not student.name.begins_with("empty"): # and not "player" in student.name
+		#Globals.selected_student = student
 		var student_profile = level_config["student_configs"][student.name]
 		student_profile_box.set_text(student_profile)
-		student_profile_box.show()
+		print(student_profile)
+		#student_profile_box.show()
 
-func _on_student_placed(student: Student, desk: Student):
-	if student.is_moveable == false:
-		return
-
-	if planner.add_placement(student, desk):
-		#friends.erase(friend_name)  # Remove from available friends
+func _on_student_placed(student: Student, target_desk: Student) -> void:
+	print("Student being placed: ", student)
+	var student_name = student.name
+	var valid = is_valid_placement(student, target_desk)
+	var grid_pos = target_desk.grid_position
+	
+	if student is Icon:
 		friend_placement_panel.remove_icon(student.name)
-		Globals.selected_student = null
-		update_preview()
+	elif student is Avatar:
+		var current_pos = Utils.get_desk_position(student, classroom, desk_grid)
+		if current_pos != Vector2i(-1, -1):
+			classroom[current_pos.y][current_pos.x] = "empty"
+		student.set_desk_empty()
+	
+	# Update classroom array
+	var new_pos = Utils.get_desk_position(target_desk, classroom, desk_grid)
+	classroom[new_pos.y][new_pos.x] = String(student_name)
+	
+	# Update target desk
+	target_desk.highlight(valid)
+	target_desk.set_student_name(student_name)
+	target_desk.empty_desk = false
+
+	current_note_holder = target_desk
+
+	# Update game state
+	validate_all_students()
+	calculate_note_chain()
+	update_preview()
+	
+	print(classroom)
+		
+func _on_student_dragged(student: Student):
+	# what's the target desk?
+	
+	print("dragging student: ", student)
+	
+func _on_student_return_to_panel(student: Student):
+	# Clear their position in the classroom array
+	var pos = Utils.get_desk_position(student, classroom, desk_grid)
+	if pos != Vector2i(-1, -1):
+		classroom[pos.y][pos.x] = "empty"
+	
+	var friend_list = friend_placement_panel.grid_container.get_children()
+	var student_node = friend_list.filter(func(node): return node.name == student.name)
+	
+	if not student_node.is_empty():
+		student_node[0].character_art.modulate.a = 1
 	else:
-		print("Can't place student there!")
-
-#func highlight_valid_recipients(valid_recipients: Array):
-	## Add visual feedback for valid recipients
-	#for student_name in valid_recipients:
-		#var student = desk_grid.get_node(student_name)
-		## Add highlight effect
-		#student.highlight()
-
-#func clear_highlights():
-	## Remove all highlight effects
-	#for student in desk_grid.get_children():
-		#student.unhighlight()
-
-func _on_undo_pressed():
-	planner.undo()
-
-func _on_redo_pressed():
-	planner.redo()
+		friend_placement_panel.add_icon(student.name)
+		student.set_desk_empty()
+		
+	validate_all_students()
+	calculate_note_chain()
+	update_preview()

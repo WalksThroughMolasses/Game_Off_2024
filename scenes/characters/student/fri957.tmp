@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://b6jilagiy0cko"]
+[gd_scene load_steps=7 format=3 uid="uid://b6jilagiy0cko"]
 
 [ext_resource type="Script" path="res://scenes/characters/student/student_avatar.gd" id="1_1dwn7"]
 [ext_resource type="PackedScene" uid="uid://cqqhk7ios8dcn" path="res://scenes/props/desk.tscn" id="2_gmhdo"]
@@ -13,9 +13,6 @@ corner_radius_top_left = 15
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3te2g"]
-size = Vector2(193, 192)
 
 [node name="Friend" type="Button"]
 custom_minimum_size = Vector2(200, 200)
@@ -102,12 +99,6 @@ vertical_alignment = 1
 
 [node name="Marker2D" type="Marker2D" parent="Control/Panel"]
 position = Vector2(100, 100)
-
-[node name="Area2D" type="Area2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(100.5, 100)
-shape = SubResource("RectangleShape2D_3te2g")
 
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

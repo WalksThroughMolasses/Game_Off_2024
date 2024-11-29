@@ -1,11 +1,14 @@
 extends Student
 
 @onready var grid_bg = $Control/GridBG
-@onready var character_art = $Control/CharacterArt
 @onready var debug_label = $Control/DebugLabel
 
 var grid_position: Vector2i
-var is_friend: bool = false
+
+signal student_clicked(student)
+
+func _ready():
+	character_art = $Control/CharacterArt
 
 func set_grid_position(pos: Vector2i):
 	grid_position = pos

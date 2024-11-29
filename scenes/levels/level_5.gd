@@ -181,12 +181,15 @@ Most people aren't going to put up with sitting next to him... But Little Lilypa
 			"name": "Aabria",
 			"description": ["""Always listening to loud music. 
 			
-			Need to make eye contact to get her attention, so can't pass to her from behind."""],
+Need to make eye contact to get her attention, so can't pass to her from behind."""],
 			"rules": [
 				SequenceRule.new({
 					"direction": {
 						"cant_receive_from": [Globals.Direction.NORTH]
 					}
+				}),
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},
@@ -202,6 +205,9 @@ If I want his help, I should get it early, as he's probably going to head to sic
 							3: Globals.Requirement.BEFORE
 						}
 					}
+				}),
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
 				})
 			]
 		},
@@ -212,7 +218,7 @@ If I want his help, I should get it early, as he's probably going to head to sic
 He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["bully_01", "bully_02"],
+					"cant_sit_next_to": ["bully_01", "bully_02", "smelly"],
 					"unless_adjacent": {"bully_01": ["shakas"], "bully_02": ["shakas"]}
 				})
 			]

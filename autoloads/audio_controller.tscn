@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dj4l1i32s1f2h"]
+
+[ext_resource type="Script" path="res://autoloads/audio_controller.gd" id="1_xw8qq"]
+[ext_resource type="AudioStream" uid="uid://1uti3ls21dve" path="res://assets/audio/ambience/Ambience.mp3" id="2_m515m"]
+[ext_resource type="AudioStream" uid="uid://csauwom6sktci" path="res://assets/audio/sfx/SchoolBell.mp3" id="3_ee5v6"]
+
+[sub_resource type="AudioStream" id="AudioStream_jhdwo"]
+
+[node name="AudioController" type="Node"]
+script = ExtResource("1_xw8qq")
+
+[node name="AmbiencePlayerA" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m515m")
+volume_db = -18.0
+
+[node name="AmbiencePlayerB" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_m515m")
+volume_db = -80.0
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = SubResource("AudioStream_jhdwo")
+max_polyphony = 10
+
+[node name="SchoolBell" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_ee5v6")
+volume_db = -6.0
+
+[node name="SFXPlayer" type="AudioStreamPlayer" parent="."]
+volume_db = -8.0
+max_polyphony = 2

@@ -40,11 +40,14 @@ func _input(event):
 	if event.is_action_pressed("click"):
 		Input.set_custom_mouse_cursor(Globals.cursor_small, Input.CURSOR_ARROW)
 		Input.set_custom_mouse_cursor(Globals.cursor_small, Input.CURSOR_FORBIDDEN)
+		#AudioController.play_sfx("click")
 	
 	if event.is_action_released("click"):
 		Globals.selected_student = null
 		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
 		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
+		#AudioController.play_sfx("click")
+		#AudioController.play_sfx("release")
 
 func setup_level():
 	# Clear placeholder grid
@@ -76,6 +79,9 @@ func setup_level():
 
 	# Display note
 	note_screen.display_next_note()
+	
+	# Play ambience
+	AudioController.play_ambience()
 
 	# Update initial highlights
 	update_preview()
@@ -190,6 +196,8 @@ func find_valid_path() -> Array:
 	
 func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
 	
+	var notes = AudioController.get_notes_for_chain(note_chain.size())
+	
 	# Disable moving students
 	for desk in desk_grid.get_children():
 		desk.is_moveable = false
@@ -203,6 +211,7 @@ func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
 		var current_student = note_chain[i]
 		note_animation.position = current_student.position
 		await get_tree().create_timer(delay).timeout
+		AudioController.play_music(notes[i])
 		await current_student.shake(0.2, 3.0)
 
 		# If there's a next student, tween to their position
@@ -216,7 +225,8 @@ func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
 			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT)
 			await tween.finished
 	
-	await get_tree().create_timer(delay).timeout
+	AudioController.play_school_bell()
+	await get_tree().create_timer(2.5).timeout
 	
 	awaiting_level_advance = false
 
@@ -392,6 +402,9 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	target_desk.grab_focus()
 
 	current_note_holder = target_desk
+	
+	# Play sound
+	AudioController.play_sfx("release")
 
 	# Update game state
 	validate_all_students()
@@ -422,6 +435,9 @@ func _on_student_return_to_panel(student: Student):
 	else:
 		friend_placement_panel.add_icon(student.name)
 		student.set_desk_empty()
+	
+	# Play SFX
+	AudioController.play_sfx("place")
 		
 	validate_all_students()
 	calculate_note_chain()

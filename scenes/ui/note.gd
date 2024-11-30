@@ -25,6 +25,9 @@ func display_next_note():
 	current_note += 1
 	note_content.texture = note_content_textures[current_note]
 	self.position = Vector2.ZERO
+	
+	# Play bell sound
+	
 
 func _on_start_next_level():
 	var tween: Tween

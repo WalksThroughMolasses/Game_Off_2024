@@ -12,10 +12,12 @@ var awaiting_level_advance : bool = false
 @onready var student_profile_box = $UI/StudentProfiles
 @onready var friend_placement_panel = $UI/FriendPlacementPanel
 @onready var note_trail = $UI/NoteTrail
+@onready var note_screen = $UI/Note
 
 @onready var friend_scene : PackedScene = preload("res://scenes/characters/student/friend.tscn")
 @onready var rival_scene : PackedScene = preload("res://scenes/characters/student/rival.tscn")
 @onready var desk_scene : PackedScene = preload("res://scenes/props/desk.tscn")
+
 
 # game state vars
 var player: Student
@@ -32,12 +34,8 @@ func _ready():
 	
 func _input(event):
 	
-	# Advance level TODO: pop-up box handles this as well
-	if awaiting_level_advance and event.is_action_pressed("ui_accept"):
-		awaiting_level_advance = false
-		Globals.current_level += 1
-		load_level_config()
-		reset_and_setup_level()
+	if awaiting_level_advance:
+		return
 	
 	if event.is_action_pressed("click"):
 		Input.set_custom_mouse_cursor(Globals.cursor_small, Input.CURSOR_ARROW)
@@ -76,23 +74,33 @@ func setup_level():
 	# Set character profile to first friend
 	_on_student_clicked(friend_placement_panel.get_node("Panel/GridContainer").get_children()[0])
 
-	# init planning phase
-	#planner.start_planning()
+	# Display note
+	note_screen.display_next_note()
 
 	# Update initial highlights
 	update_preview()
 	
 func load_level_config():
+	print(Globals.current_level)
 	var level_script = load("res://scenes/levels/level_%d.gd" % Globals.current_level).new()
 	level_config = level_script.level_config
 	student_configs = level_config["student_configs"]
 	classroom = level_config.classroom
 	friends = level_config.friends
 
-func on_level_complete():
+func on_level_complete(note_chain):
 	# Show completion message
-	print("Level Complete! Press Space to continue...")
+	print("Level Complete!")
 	awaiting_level_advance = true
+	await play_note_passing_animation(note_chain)
+	# Wait until the animation sets awaiting_level_advance back to false
+	await get_tree().create_timer(0.1).timeout  # Small buffer to ensure animation started
+	await awaiting_level_advance == false
+	Globals.current_level += 1
+	load_level_config()
+	reset_and_setup_level()
+	
+	
 
 func reset_and_setup_level():
 	# Reset current note holder and player references
@@ -180,7 +188,12 @@ func find_valid_path() -> Array:
 	
 	return []
 	
-func note_passing_animation(note_chain: Array, delay: float = 0.2):
+func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
+	
+	# Disable moving students
+	for desk in desk_grid.get_children():
+		desk.is_moveable = false
+	
 	var note_animation = note_trail.get_node("Animation")
 	var tween: Tween
 
@@ -202,6 +215,10 @@ func note_passing_animation(note_chain: Array, delay: float = 0.2):
 			tween = create_tween()
 			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT)
 			await tween.finished
+	
+	await get_tree().create_timer(delay).timeout
+	
+	awaiting_level_advance = false
 
 func check_solution(note_chain) -> bool:
 	# Check if there are still unplaced students
@@ -220,12 +237,11 @@ func check_solution(note_chain) -> bool:
 		note_trail.clear_points()
 		for student in note_chain:
 			note_trail.add_point(student.position)
-			note_passing_animation(note_chain)
 		current_note_holder = note_chain[-1]
 
 		print("Valid path to crush found!")
 		student_profile_box.set_text("Note passed to crush!!", "")
-		on_level_complete()
+		on_level_complete(note_chain)
 		return true
 	return false
 	

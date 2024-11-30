@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://biyc8f3r36iah"]
+[gd_scene load_steps=6 format=3 uid="uid://biyc8f3r36iah"]
 
 [ext_resource type="Script" path="res://scenes/ui/friend_placement_panel.gd" id="1_iri1h"]
+[ext_resource type="Texture2D" uid="uid://s811x7blsjrc" path="res://assets/sprites/characters/Empty_select.png" id="2_h6et5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kbj77"]
 bg_color = Color(0.815686, 0.764706, 1, 0.607843)
@@ -34,6 +35,55 @@ layout_mode = 0
 offset_right = 660.0
 offset_bottom = 312.0
 theme = SubResource("Theme_3fhsf")
+
+[node name="BGCircles" type="GridContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.05
+anchor_top = 0.05
+anchor_right = 0.95
+anchor_bottom = 0.95
+offset_left = -3.0
+offset_top = -1.6
+offset_right = 3.0
+offset_bottom = 1.60001
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 32
+theme_override_constants/v_separation = 32
+columns = 4
+
+[node name="BGCircle" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle2" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle3" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle4" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle5" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle6" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle7" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
+
+[node name="BGCircle8" type="TextureRect" parent="Panel/BGCircles"]
+layout_mode = 2
+texture = ExtResource("2_h6et5")
 
 [node name="GridContainer" type="GridContainer" parent="Panel"]
 layout_mode = 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2h1w8o1euxt7"]
+[gd_scene load_steps=10 format=3 uid="uid://c2h1w8o1euxt7"]
 
 [ext_resource type="Script" path="res://scenes/levels/game.gd" id="1_lb7do"]
 [ext_resource type="PackedScene" uid="uid://dxvc5c0vamwj6" path="res://scenes/ui/student_profiles.tscn" id="2_gbguh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://rigwdxim0qjj" path="res://scenes/ui/undo.tscn" id="3_yx8e2"]
 [ext_resource type="PackedScene" uid="uid://duptby1txs1cw" path="res://scenes/ui/redo.tscn" id="6_5y2ll"]
 [ext_resource type="PackedScene" uid="uid://biyc8f3r36iah" path="res://scenes/ui/friend_placement_panel.tscn" id="7_yim3n"]
+[ext_resource type="PackedScene" uid="uid://dwlqenyeso1gx" path="res://scenes/ui/note.tscn" id="8_d4lrq"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ctu0h"]
 bg_color = Color(1, 0.945098, 0.729412, 1)
@@ -137,5 +138,11 @@ offset_bottom = -103.0
 grow_horizontal = 0
 grow_vertical = 0
 
+[node name="Note" parent="UI" instance=ExtResource("8_d4lrq")]
+offset_top = 1100.0
+offset_bottom = 1100.0
+
 [connection signal="pressed" from="UI/Undo" to="." method="_on_undo_pressed"]
 [connection signal="pressed" from="UI/Redo" to="." method="_on_redo_pressed"]
+
+[editable path="UI/Note"]

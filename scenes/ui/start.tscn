@@ -11,4 +11,5 @@ texture_normal = ExtResource("1_jeenl")
 texture_pressed = ExtResource("2_tkhmf")
 script = ExtResource("3_mebrh")
 
+[connection signal="button_up" from="." to="." method="_on_button_up"]
 [connection signal="pressed" from="." to="." method="_on_pressed"]

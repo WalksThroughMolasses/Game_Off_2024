@@ -104,18 +104,12 @@ func make_crush():
 	self.is_friend = true
 
 func receive_note():
-	#note_icon.show()
 	has_note = true
-	#var tween = create_tween()
-	#tween.tween_property(self, "modulate", Color(1.2, 1.2, 1.2), 0.05)
 
 func passed_note():
-	#note_icon.hide()
 	print(self.name, " passed the note.")
 	has_note = false
-	#var tween = create_tween()
-	#tween.tween_property(self, "modulate", Color.WHITE, 0.05)
-	
+
 func highlight(valid: bool) -> void:
 
 	if valid:
@@ -127,10 +121,6 @@ func highlight(valid: bool) -> void:
 	
 	if !is_friend:
 		grid_bg.modulate = highlight_immovable
-
-#func unhighlight():
-	##grid_bg.hide()
-	#grid_bg.modulate.a = 0
 	
 func show_preview(student_name):
 	character_art.texture = character_textures[student_name]

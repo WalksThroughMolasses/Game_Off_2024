@@ -1,39 +1,39 @@
 var level_config = {
 	"classroom": [
-		["player_male", "bully_02", "smelly", "bully_01"],
+		["player_male", "bully_02", "smelly", "empty"],
+		["empty", "empty", "empty", "bully_01"],
 		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "bff_female", "player_female"],
-		["empty", "empty", "empty", "empty"]
+		["empty", "empty", "bff_female", "player_female"]
 	],
-	"friends": ["bff_male", "frog", "crying", "shakas"],
+	"friends": ["bff_male", "frog", "crying", "shakas", "headphones"],
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
-			"description": ["""<3"""],
+			"description": ["""Sophie's best friend. She's nice."""],
 			"rules": []
 		},
 		"player_male": {
 			"name": "Bobby",
-			"description": ["""<3"""],
+			"description": ["""Sophie gave me this note in class yesterday. 
+			
+I can't believe she has a crush on me!"""],
 			"rules": []
 		},
 		"bff_male": {
 			"name": "Eugene",
 			"description": ["""My best friend.
 
-If he's not sitting next to me, he has to be the one to give the note to Nina."""],
+If he's not sitting next to me, he has to be the one to give the note to my crush."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["player_male", "player_female"],
+					"must_sit_next_to": ["player_male", "bff_female"],
 					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
 		"bff_female": { 
 			"name": "Sophie",
-			"description": ["""My best friend.
-							
-If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
+			"description": ["""I've been trying to work up the courage to ask her out for ages."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["player_female", "player_male"],
@@ -60,7 +60,7 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_01"],
-					"can't_sit_next_to": ["smelly"]
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -72,19 +72,31 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_01"],
-					"can't_sit_next_to": ["smelly"]
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Captain of the wrestling team (you can tell by the ears).
+			
+Trent and Brayden have been picking on Billy lately."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"bully_02": {
 			"name": "Brayden",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Kind of just does whatever Trent does.
+			
+Unfortunately that includes picking on Billy."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"smelly": {
 			"name": "Bronson",

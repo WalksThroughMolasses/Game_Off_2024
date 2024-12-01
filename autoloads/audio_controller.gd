@@ -4,6 +4,7 @@ var initial_volumes = {}  # Dictionary to store initial volumes
 
 @onready var ambience_track = preload("res://assets/audio/ambience/Ambience.mp3")
 @onready var bell_audio_streams = {
+	0: create_audio_stream("res://assets/audio/music/Bell_Note0_marimba.mp3"),
 	1: create_audio_stream("res://assets/audio/music/Bell_Note1_marimba.mp3"),
 	2: create_audio_stream("res://assets/audio/music/Bell_Note2_marimba.mp3"),
 	3: create_audio_stream("res://assets/audio/music/Bell_Note3_marimba.mp3"),
@@ -16,23 +17,10 @@ var initial_volumes = {}  # Dictionary to store initial volumes
 }
 
 @onready var click_audio_streams = {
-	1: create_audio_stream("res://assets/audio/sfx/click.mp3"),
-	2: create_audio_stream("res://assets/audio/sfx/release.mp3"),
+	1: create_audio_stream("res://assets/audio/sfx/pop.mp3"),
+	2: create_audio_stream("res://assets/audio/sfx/place.mp3"),
+	3: create_audio_stream("res://assets/audio/sfx/scribble.mp3")
 }
-#
-#
-#@onready var pickup_audio_streams = {
-	#1: create_audio_stream("res://assets/audio/sfx/Pickup-001.mp3"),
-	#2: create_audio_stream("res://assets/audio/sfx/Pickup-002.mp3"),
-	#3: create_audio_stream("res://assets/audio/sfx/Pickup-003.mp3"),
-#}
-#
-#@onready var place_audio_streams = {
-	#1: create_audio_stream("res://assets/audio/sfx/Place-001.mp3"),
-	#2: create_audio_stream("res://assets/audio/sfx/Place-002.mp3"),
-	#3: create_audio_stream("res://assets/audio/sfx/Place-003.mp3"),
-#}
-
 
 @onready var ambience_player_a = $AmbiencePlayerA
 @onready var ambience_player_b = $AmbiencePlayerB
@@ -55,6 +43,8 @@ func _ready():
 	ambience_player_b.finished.connect(_on_ambience_finished.bind(ambience_player_b))
 
 	active_ambience_player = ambience_player_a
+	
+	print(bell_audio_streams)
 	
 func _on_ambience_finished(finished_player: AudioStreamPlayer):
 	var next_player = ambience_player_b if finished_player == ambience_player_a else ambience_player_a
@@ -82,18 +72,23 @@ func create_audio_stream(path: String) -> AudioStreamPlayer:
 # Helper function to get the notes needed for a chain length
 func get_notes_for_chain(chain_length: int) -> Array:
 	var notes = []
-	var start_index = 10 - chain_length  # For chain_length 4, start at note 6
-	for i in range(start_index, 10):  # Up to but not including 10
+	# Subtract 1 from chain length to skip the first student
+	var actual_length = chain_length - 1
+	var start_index = 9 - actual_length
+	for i in range(start_index, 10):
 		notes.append(bell_audio_streams[i])
+	print("Notes array size: ", notes.size())
 	return notes
 	
 func play_sfx(sound_type):
 	#var random_key = randi() % place_audio_streams.size() + 1
 	var sfx
-	if sound_type == "click":
+	if sound_type == "pop":
 		sfx = click_audio_streams[1]
-	elif sound_type == "release":
+	elif sound_type == "place":
 		sfx = click_audio_streams[2]
+	elif sound_type == "scribble":
+		sfx = click_audio_streams[3]
 	if sfx:
 		sfx.play()
 	
@@ -110,5 +105,6 @@ func play_ambience():
 		active_ambience_player.play()
 	
 func play_music(note):
+	print("playing note: ", note)
 	note.volume_db = initial_volumes[note.name]
 	note.play()

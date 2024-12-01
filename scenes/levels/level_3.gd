@@ -9,12 +9,14 @@ var level_config = {
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
-			"description": ["""<3"""],
+			"description": ["""AAAHHHHHHHHHHHH!!!!! 
+			
+...I'm trying to look chill."""],
 			"rules": []
 		},
 		"player_male": {
 			"name": "Bobby",
-			"description": ["""<3"""],
+			"description": ["""I wonder if he's a good skater?"""],
 			"rules": []
 		},
 		"poser": {
@@ -23,18 +25,6 @@ var level_config = {
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["twin_01", "twin_02", "smelly"],
-				})
-			]
-		},
-		"bff_male": {
-			"name": "Eugene",
-			"description": ["""My best friend.
-
-If he's not sitting next to me, he has to be the one to give the note to Nina."""],
-			"rules": [
-				AdjacentRule.new({
-					"must_sit_next_to": ["player_male", "player_female"],
-					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -63,7 +53,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"posh": { 
 			"name": "Eleanor",
-			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
+			"description": ["""Captain of the debate team, rowing team, croquet team and etiquette team.
+			
+She won't help until she finishes her tea. (After turn 3)"""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]
@@ -79,9 +71,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"furry": {
 			"name": "Dylan",
-			"description": ["""Alice and Alfonso won't sit next to him, because they're allergic to cats.
+			"description": ["""Alice and Alfonso won't sit next to them, because they are both allergic to cats.
 
-It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
+It's unclear if Dylan just happens to own a cat... or if their costume is somehow made of real cat hair."""],
 			"rules": [
 			]
 		},
@@ -106,7 +98,7 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_02"],
-					"can't_sit_next_to": ["smelly"]
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -118,7 +110,7 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_01"],
-					"can't_sit_next_to": ["smelly"]
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -134,13 +126,25 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Captain of the wrestling team (you can tell by the ears).
+			
+Trent and Brayden have been picking on Billy lately."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"bully_02": {
 			"name": "Brayden",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Kind of just does whatever Trent does.
+			
+Unfortunately that includes picking on Billy."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"sleepy": {
 			"name": "Tala",
@@ -162,7 +166,9 @@ Most people aren't going to put up with sitting next to him... But Little Lilypa
 		},
 		"frog": {
 			"name": "Little Lilypad",
-			"description": ["""Jayden and Trent will try to steal his lilypad if he sits next to them."""],
+			"description": ["""Yeah, I'm not sure what to say about this guy.
+			
+Jayden and Trent will try to steal his lilypad if he sits next to them."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_01", "bully_02"]
@@ -204,7 +210,7 @@ If I want his help, I should get it early, as he's probably going to head to sic
 He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["bully_01", "bully_02"],
+					"cant_sit_next_to": ["bully_01", "bully_02", "smelly"],
 					"unless_adjacent": {"bully_01": ["shakas"], "bully_02": ["shakas"]}
 				})
 			]

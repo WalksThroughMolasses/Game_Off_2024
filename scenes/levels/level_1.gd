@@ -1,20 +1,24 @@
 var level_config = {
 	"classroom": [
-		["player_female", "empty", "empty", "bully_01"],
-		["empty", "empty", "empty", "bully_02"],
-		["empty", "twin_02", "empty", "empty"],
-		["empty", "empty", "player_male", "empty"]
+		["player_female", "empty", "empty", "shakas"],
+		["empty", "empty", "empty", "twin_02"],
+		["empty", "bully_01", "empty", "bully_02"],
+		["empty", "empty", "player_male", "bff_male"]
 	],
 	"friends": ["bff_female", "headphones", "twin_01", "crying"],
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
-			"description": ["""It me."""],
+			"description": ["""That's me!
+			
+My friends are going to help me pass this note to Bobby. I'm too nervous to tell him myself.
+			
+I just need to figure out where they should sit to make sure the note gets to him."""],
 			"rules": []
 		},
 		"player_male": {
 			"name": "Bobby",
-			"description": ["""<3"""],
+			"description": ["""He's so cute."""],
 			"rules": []
 		},
 		"crying": {
@@ -78,13 +82,25 @@ If she's not sitting next to me, she has to be the one to give the note to Bobby
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Captain of the wrestling team (you can tell by the ears).
+			
+Trent and Brayden have been picking on Billy lately."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 		"bully_02": {
 			"name": "Brayden",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
-			"rules": []
+			"description": ["""Kind of just does whatever Trent does.
+			
+Unfortunately that includes picking on Billy."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
 		},
 	}
 }

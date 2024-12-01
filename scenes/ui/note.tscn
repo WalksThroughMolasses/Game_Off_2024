@@ -1,9 +1,62 @@
-[gd_scene load_steps=5 format=3 uid="uid://dwlqenyeso1gx"]
+[gd_scene load_steps=18 format=3 uid="uid://dwlqenyeso1gx"]
 
 [ext_resource type="Script" path="res://scenes/ui/note.gd" id="1_4xm06"]
 [ext_resource type="Texture2D" uid="uid://b0d8mg6444ib6" path="res://assets/sprites/note_screen_bg.png" id="1_d6sdg"]
 [ext_resource type="PackedScene" uid="uid://s80us0xrk3uq" path="res://scenes/ui/start.tscn" id="2_3n65j"]
-[ext_resource type="Texture2D" uid="uid://ccmwm7pukhdyx" path="res://assets/sprites/TEMP_note.png" id="2_q7la8"]
+[ext_resource type="Texture2D" uid="uid://clclj481js6fu" path="res://assets/sprites/notes/Note_01.png" id="3_0a76c"]
+[ext_resource type="Texture2D" uid="uid://h4gbd0dck3pt" path="res://assets/sprites/characters/Player_Female_large.png" id="5_mw1j5"]
+[ext_resource type="Texture2D" uid="uid://3k8n0ncohk3j" path="res://assets/sprites/wipe/WipeAnim_00.png" id="7_w2jmq"]
+[ext_resource type="Texture2D" uid="uid://bmgec0252dgmu" path="res://assets/sprites/wipe/WipeAnim_01.png" id="8_rsa0r"]
+[ext_resource type="Texture2D" uid="uid://b141h6v0yt0rf" path="res://assets/sprites/wipe/WipeAnim_02.png" id="9_4ck77"]
+[ext_resource type="Texture2D" uid="uid://qwv6hjb60cmc" path="res://assets/sprites/wipe/WipeAnim_03.png" id="10_bmm81"]
+[ext_resource type="Texture2D" uid="uid://copqjdfmsaqmw" path="res://assets/sprites/wipe/WipeAnim_04.png" id="11_386p1"]
+[ext_resource type="Texture2D" uid="uid://c5yh65aw2dlja" path="res://assets/sprites/wipe/WipeAnim_05.png" id="12_34vks"]
+[ext_resource type="Texture2D" uid="uid://1r2drpe52rcv" path="res://assets/sprites/wipe/WipeAnim_06.png" id="13_8joy4"]
+[ext_resource type="Texture2D" uid="uid://bfjo0n6eu2bfe" path="res://assets/sprites/wipe/WipeAnim_07.png" id="14_ygdse"]
+[ext_resource type="Texture2D" uid="uid://cikid4bi3orku" path="res://assets/sprites/wipe/WipeAnim_08.png" id="15_ryuu6"]
+[ext_resource type="Texture2D" uid="uid://1044g83k6vfk" path="res://assets/sprites/wipe/WipeAnim_09.png" id="16_2it04"]
+[ext_resource type="Texture2D" uid="uid://c6rohobsbg36i" path="res://assets/sprites/wipe/WipeAnim_10.png" id="17_1vxvj"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_h8uwr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_w2jmq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_rsa0r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_4ck77")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_bmm81")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_386p1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_34vks")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_8joy4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_ygdse")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_ryuu6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_2it04")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_1vxvj")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
 
 [node name="Note" type="Control"]
 layout_mode = 3
@@ -22,16 +75,11 @@ texture = ExtResource("1_d6sdg")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.188
-anchor_top = 0.204
-anchor_right = 0.813
-anchor_bottom = 0.796
-offset_left = 0.039978
-offset_top = -0.320007
-offset_right = 0.039917
-offset_bottom = 220.32
-grow_vertical = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_constants/margin_left = 30
 theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 30
@@ -45,15 +93,39 @@ alignment = 1
 [node name="CenterContainer2" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="NoteContent" type="TextureRect" parent="MarginContainer/VBoxContainer/CenterContainer2"]
+[node name="MaskAnimation" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer/CenterContainer2"]
 unique_name_in_owner = true
-layout_mode = 2
-texture = ExtResource("2_q7la8")
+clip_children = 1
+position = Vector2(930, 0)
+sprite_frames = SubResource("SpriteFrames_h8uwr")
+
+[node name="NoteContent" type="TextureRect" parent="MarginContainer/VBoxContainer/CenterContainer2/MaskAnimation"]
+unique_name_in_owner = true
+offset_left = -960.0
+offset_top = -540.0
+offset_right = 960.0
+offset_bottom = 540.0
+texture = ExtResource("3_0a76c")
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="Start" parent="MarginContainer/VBoxContainer/CenterContainer" instance=ExtResource("2_3n65j")]
+visible = false
 layout_mode = 2
 
+[node name="CharacterArt" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.0
+offset_top = 122.0
+offset_right = 63.0
+offset_bottom = 126.0
+grow_horizontal = 2
+texture = ExtResource("5_mw1j5")
+
+[connection signal="animation_finished" from="MarginContainer/VBoxContainer/CenterContainer2/MaskAnimation" to="." method="_on_mask_animation_animation_finished"]
 [connection signal="next_level" from="MarginContainer/VBoxContainer/CenterContainer/Start" to="." method="_on_start_next_level"]

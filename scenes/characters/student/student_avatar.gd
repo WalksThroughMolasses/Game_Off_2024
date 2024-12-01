@@ -6,6 +6,8 @@ class_name Avatar
 @onready var debug_label = $Control/Panel/Label
 @onready var marker = $Control/Panel/Marker2D
 @onready var heart = $Control/Heart
+@onready var broken_heart = $Control/BrokenHeart
+@onready var player_icon = $Control/PlayerIcon
 
 # colors
 @export var highlight_valid_placement := Color("#FFE375FF")
@@ -37,16 +39,26 @@ func _apply_name(student_name):
 	if "empty" in student_name:
 		set_desk_empty()
 	else:
-		if student_name == "player_female":
-			if Globals.current_level % 2 != 0:
+		# Special case for last level
+		if Globals.current_level == 6:
+			if student_name == "bff_female":
 				self.make_player()
-			else:
+			elif student_name == "player_female":
 				self.make_crush()
-		elif student_name == "player_male":
-			if Globals.current_level % 2 != 0:
-				self.make_crush()
-			else:
-				self.make_player()
+			elif student_name == "player_male":
+				self.is_friend = false
+				self.is_moveable = false
+		else:
+			if student_name == "player_female":
+				if Globals.current_level % 2 != 0:
+					self.make_player()
+				else:
+					self.make_crush()
+			elif student_name == "player_male":
+				if Globals.current_level % 2 != 0:
+					self.make_crush()
+				else:
+					self.make_player()
 
 		character_art.texture = character_textures[student_name]
 		character_art.show()
@@ -90,15 +102,22 @@ func make_player():
 	self.add_to_group("player")
 	self.remove_from_group("crush")
 	
+	player_icon.show()
+	
 	self.is_moveable = false
 	self.is_friend = true
+	
+	grab_focus()
 
 func make_crush():
 	#character_art.texture = character_textures["crush"]
 	self.add_to_group("crush")
 	self.remove_from_group("player")
 	
-	heart.show()
+	if Globals.current_level == 5:
+		broken_heart.show()
+	else:
+		heart.show()
 	
 	self.is_moveable = false
 	self.is_friend = true
@@ -131,14 +150,32 @@ func hide_preview():
 	character_art.texture = character_textures["empty_desk"]
 	character_art.modulate.a = 1
 	character_art.hide()
-
-func _on_mouse_entered():
-	if empty_desk && Globals.selected_student:
-		print("empty? ", empty_desk)
-		print(Globals.selected_student)
-		var tween = create_tween()
-		tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
-
-func _on_mouse_exited():
+	
+func heartbeat_animation():
 	var tween = create_tween()
-	tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.05)
+	tween.set_loops(5)  # Set how many times you want it to loop
+
+	# First beat - stronger
+	tween.tween_property(heart, "scale", Vector2(1.3, 1.3), 0.1).set_ease(Tween.EASE_OUT)
+	tween.tween_property(heart, "scale", Vector2(1.0, 1.0), 0.1).set_ease(Tween.EASE_IN)
+
+	# Brief pause between beats
+	tween.tween_interval(0.1)
+
+	# Second beat - softer
+	tween.tween_property(heart, "scale", Vector2(1.15, 1.15), 0.1).set_ease(Tween.EASE_OUT)
+	tween.tween_property(heart, "scale", Vector2(1.0, 1.0), 0.1).set_ease(Tween.EASE_IN)
+
+	# Rest period before next heartbeat
+	tween.tween_interval(0.4)
+
+#func _on_mouse_entered():
+	#if empty_desk && Globals.selected_student:
+		#print("empty? ", empty_desk)
+		#print(Globals.selected_student)
+		#var tween = create_tween()
+		#tween.tween_property(self, "modulate", Color(1.1, 1.1, 1.1), 0.05)
+#
+#func _on_mouse_exited():
+	#var tween = create_tween()
+	#tween.tween_property(self, "modulate", Color(1.0, 1.0, 1.0), 0.05)

@@ -63,7 +63,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"posh": { 
 			"name": "Eleanor",
-			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
+			"description": ["""Captain of the debate team, rowing team, croquet team and etiquette team.
+			
+She won't help until she finishes her tea. (After turn 3)"""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"],
@@ -79,9 +81,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"furry": {
 			"name": "Dylan",
-			"description": ["""Alice and Alfonso won't sit next to him, because they're allergic to cats.
-							
-It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
+			"description": ["""Alice and Alfonso won't sit next to them, because they are both allergic to cats.
+
+It's unclear if Dylan just happens to own a cat... or if their costume is somehow made of real cat hair."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"],
@@ -94,7 +96,7 @@ It's unclear if Dylan just happens to own a cat... or if his costume is somehow 
 
 He's always practising his scales in class. Ms. Moore hates it, but she can't stop him.
 
-Won't sit next to Ivana after she tipped yoghurt in his horn."""],
+Won't sit next to Ivana since she tipped yoghurt in his horn."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly", "poser"],
@@ -127,7 +129,9 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"photographer": {
 			"name": "Alfonso",
-			"description": ["""Only agreed to help if he can sit next to Little Lilypad, so he can take a picture for National Geographic."""],
+			"description": ["""
+			
+Only agreed to help if he can sit next to Little Lilypad, so he can take a picture for National Geographic."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["frog"],
@@ -137,7 +141,9 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
+			"description": ["""Captain of the wrestling team (you can tell by the ears).
+			
+Trent and Brayden have been picking on Billy lately."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]
@@ -146,7 +152,9 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"bully_02": {
 			"name": "Brayden",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
+			"description": ["""Kind of just does whatever Trent does.
+			
+Unfortunately that includes picking on Billy."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]

@@ -79,11 +79,11 @@ func _on_pressed():
 	student_clicked.emit(self)
 	
 func _get_drag_data(_at_position : Vector2):
-	AudioController.play_sfx("click")
 	
 	student_clicked.emit(self) # treat drag the same as click
 	
 	if is_friend && is_moveable && !empty_desk:
+		AudioController.play_sfx("pop")
 
 		character_art.modulate.a = 0.5
 

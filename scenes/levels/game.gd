@@ -13,6 +13,7 @@ var awaiting_level_advance : bool = false
 @onready var friend_placement_panel = $UI/FriendPlacementPanel
 @onready var note_trail = $UI/NoteTrail
 @onready var note_screen = $UI/Note
+@onready var start_menu = $UI/StartMenu
 
 @onready var friend_scene : PackedScene = preload("res://scenes/characters/student/friend.tscn")
 @onready var rival_scene : PackedScene = preload("res://scenes/characters/student/rival.tscn")
@@ -28,9 +29,11 @@ func _ready():
 	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
 	Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
 	
-	# Load level
-	load_level_config()
-	setup_level()
+	start_menu.show()
+	
+	## Load level
+	#load_level_config()
+	#setup_level()
 	
 func _input(event):
 	
@@ -74,14 +77,16 @@ func setup_level():
 	var player_center = player.get_node("Control/Panel/Marker2D").global_position
 	note_trail.position = player_center
 	
-	# Set character profile to first friend
-	_on_student_clicked(friend_placement_panel.get_node("Panel/GridContainer").get_children()[0])
+	# Set character profile to player
+	_on_student_clicked(player)
+	player.grab_focus()
 
 	# Display note
+	print("Displaying next note.")
 	note_screen.display_next_note()
 	
 	# Play ambience
-	AudioController.play_ambience()
+	#AudioController.play_ambience()
 
 	# Update initial highlights
 	update_preview()
@@ -101,12 +106,10 @@ func on_level_complete(note_chain):
 	await play_note_passing_animation(note_chain)
 	# Wait until the animation sets awaiting_level_advance back to false
 	await get_tree().create_timer(0.1).timeout  # Small buffer to ensure animation started
-	await awaiting_level_advance == false
+	#await awaiting_level_advance == false
 	Globals.current_level += 1
 	load_level_config()
 	reset_and_setup_level()
-	
-	
 
 func reset_and_setup_level():
 	# Reset current note holder and player references
@@ -222,11 +225,13 @@ func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
 				tween.kill()
 			# Create new tween
 			tween = create_tween()
-			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT)
+			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
 			await tween.finished
 	
+	var crush = get_tree().get_first_node_in_group("crush")
+	crush.heartbeat_animation()
 	AudioController.play_school_bell()
-	await get_tree().create_timer(2.5).timeout
+	await get_tree().create_timer(3).timeout
 	
 	awaiting_level_advance = false
 
@@ -248,9 +253,9 @@ func check_solution(note_chain) -> bool:
 		for student in note_chain:
 			note_trail.add_point(student.position)
 		current_note_holder = note_chain[-1]
-
+		print(note_chain)
 		print("Valid path to crush found!")
-		student_profile_box.set_text("Note passed to crush!!", "")
+		#student_profile_box.set_text("Note passed to crush!!", "")
 		on_level_complete(note_chain)
 		return true
 	return false
@@ -311,10 +316,6 @@ func check_adjacent_rules(student: Student, desk: Student) -> Dictionary:
    # Skip for special students
 	if student.name == "player" or student.name == "crush":
 		return {"valid": true}
-	   
-   ## Check if desk is occupied  - not needed, can't place on occupied desk anyway
-	#if not desk.name.begins_with("empty") and desk != student:
-		#return {"valid": false, "reason": "Desk is already occupied"}
 
    # Check adjacent rules
 	if student_configs.has(student.name):
@@ -367,13 +368,10 @@ func update_classroom_array(desk: Student, student_name: String):
 func _on_student_clicked(student: Student):
 	# Show profile for existing desk_grid
 	if not student.name.begins_with("empty"): # and not "player" in student.name
-		#Globals.selected_student = student
 		var student_profile = level_config["student_configs"][student.name]
 		student_profile_box.set_text(student_profile, student.invalid_reason)
-		# check student placement is valid?
 		
 		print(student_profile)
-		#student_profile_box.show()
 
 func _on_student_placed(student: Student, target_desk: Student) -> void:
 	print("Student being placed: ", student)
@@ -404,7 +402,7 @@ func _on_student_placed(student: Student, target_desk: Student) -> void:
 	current_note_holder = target_desk
 	
 	# Play sound
-	AudioController.play_sfx("release")
+	AudioController.play_sfx("place")
 
 	# Update game state
 	validate_all_students()

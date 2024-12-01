@@ -1,20 +1,24 @@
 var level_config = {
 	"classroom": [
-		["player_male", "twin_01", "player_female", "empty"],
+		["player_male", "posh", "player_female", "empty"],
 		["empty", "twin_02", "bully_02", "empty"],
 		["empty", "empty", "empty", "empty"],
-		["empty", "empty", "furry", "empty"]
+		["empty", "empty", "furry", "bff_female"]
 	],
-	"friends": ["bff_male", "poser", "sick", "smelly", "frog", "bully_01", "crying"],
+	"friends": ["twin_01", "poser", "sick", "smelly", "frog", "bully_01", "crying"],
 	"student_configs": {
 		"player_female": {
 			"name": "Nina",
-			"description": ["""<3"""],
+			"description": ["""Sophie's best friend. 
+			
+Wonder if they ever go ice skating together?"""],
 			"rules": []
 		},
 		"player_male": {
 			"name": "Bobby",
-			"description": ["""<3"""],
+			"description": ["""I've never gone ice skating. Whole thing was Eugene's suggestion.
+			
+Thank god he's agreed to give me a lesson before Saturday."""],
 			"rules": []
 		},
 		"poser": {
@@ -30,7 +34,7 @@ var level_config = {
 			"name": "Eugene",
 			"description": ["""My best friend.
 
-If he's not sitting next to me, he has to be the one to give the note to Nina."""],
+If he's not sitting next to me, he has to be the one to give the note to my crush."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["player_male", "player_female"],
@@ -40,9 +44,9 @@ If he's not sitting next to me, he has to be the one to give the note to Nina.""
 		},
 		"bff_female": { 
 			"name": "Sophie",
-			"description": ["""My best friend.
-							
-If she's not sitting next to me, she has to be the one to give the note to Bobby."""],
+			"description": ["""Can't wait for Saturday! 
+			
+Just hope I don't embarass myself in front of Sophie..."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["player_male", "player_female"],
@@ -63,7 +67,9 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"posh": { 
 			"name": "Eleanor",
-			"description": ["""She won't help until she finishes her tea. (After turn 3)"""],
+			"description": ["""Captain of the debate team, rowing team, croquet team and etiquette team.
+			
+She won't help until she finishes her tea. (After turn 3)"""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"],
@@ -79,12 +85,12 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"furry": {
 			"name": "Dylan",
-			"description": ["""Alice and Alfonso won't sit next to him, because they're allergic to cats.
-							
-It's unclear if Dylan just happens to own a cat... or if his costume is somehow made of real cat hair."""],
+			"description": ["""Alice and Alfonso won't sit next to them, because they are both allergic to cats.
+
+It's unclear if Dylan just happens to own a cat... or if their costume is somehow made of real cat hair."""],
 			"rules": [
 				AdjacentRule.new({
-					"cant_sit_next_to": ["smelly"],
+					"cant_sit_next_to": ["smelly", "bully_01", "bully_02"],
 				}),
 			]
 		},
@@ -106,8 +112,8 @@ He's always practising his scales in class. Ms. Moore hates it, but she can't st
 The twins have to sit together. Not totally sure why. It's just a fact about them."""],
 			"rules": [
 				AdjacentRule.new({
-					"must_sit_next_to": ["twin_01"],
-					"can't_sit_next_to": ["smelly"]
+					"must_sit_next_to": ["twin_02"],
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -119,7 +125,7 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["twin_01"],
-					"can't_sit_next_to": ["smelly"]
+					"cant_sit_next_to": ["smelly"]
 				})
 			]
 		},
@@ -135,9 +141,9 @@ The twins have to sit together. Not totally sure why. It's just a fact about the
 		},
 		"bully_01": {
 			"name": "Trent",
-			"description": ["""Trent's softened up a bit. 
+			"description": ["""Captain of the wrestling team.
 			
-Billy still refuses to sit next to him. But he'll back up any one else that Brayden picks on."""],
+Trent's softened up a bit. Billy still refuses to sit next to him, but he'll back up any one else that Brayden picks on."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]
@@ -146,7 +152,9 @@ Billy still refuses to sit next to him. But he'll back up any one else that Bray
 		},
 		"bully_02": {
 			"name": "Brayden",
-			"description": ["""Trent and Brayden have been picking on Billy lately."""],
+			"description": ["""Brayden's finally doing his own thing now.
+			
+Unfortunately that includes picking on Little Lilypad."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]
@@ -174,7 +182,9 @@ Most people aren't going to put up with sitting next to him... But Little Lilypa
 		},
 		"frog": {
 			"name": "Little Lilypad",
-			"description": ["""Yeah, I'm not sure what to say about this guy."""],
+			"description": ["""Yeah, I'm not sure what to say about this guy.
+			
+Trent's being nice to him now, but Jayden still wants to steal his lilypad."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_02"],

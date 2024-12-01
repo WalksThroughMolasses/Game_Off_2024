@@ -25,7 +25,7 @@ I just need to figure out where they should sit to make sure the note gets to hi
 			"name": "Billy",
 			"description": ["""Pretty sensitive. 
 			
-He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
+He won't sit next to anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_01", "bully_02"],
@@ -118,7 +118,7 @@ Trent and Brayden have been picking on Billy lately."""],
 			"name": "Brayden",
 			"description": ["""Kind of just does whatever Trent does.
 			
-Unfortunately that includes picking on Billy."""],
+Unfortunately, that includes picking on Billy."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]

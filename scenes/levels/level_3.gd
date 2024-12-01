@@ -141,7 +141,7 @@ Trent and Brayden have been picking on Billy lately."""],
 			"name": "Brayden",
 			"description": ["""Kind of just does whatever Trent does.
 			
-Unfortunately that includes picking on Billy."""],
+Unfortunately, that includes picking on Billy."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"]
@@ -150,7 +150,7 @@ Unfortunately that includes picking on Billy."""],
 		},
 		"sleepy": {
 			"name": "Tala",
-			"description": [""""Honk shoo, honk shoo" - Tala in Math class, 2024
+			"description": [""""Honk shoo, honk shoo." - Tala in Math class, 2024
 
 I'd have to wake her up to get any help from her. No easy feat."""],
 			"rules": [
@@ -213,7 +213,7 @@ If I want his help, I should get it early, as he's probably going to head to sic
 			"name": "Billy",
 			"description": ["""Pretty sensitive. 
 							
-He won't sit next anyone who might pick on him, unless he has Alice nearby to back him up."""],
+He won't sit next to anyone who might pick on him, unless he has Alice nearby to back him up."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["bully_01", "bully_02", "smelly"],

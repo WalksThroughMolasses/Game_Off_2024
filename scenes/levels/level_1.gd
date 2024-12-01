@@ -46,9 +46,7 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 		},
 		"bff_male": {
 			"name": "Eugene",
-			"description": ["""My best friend.
-
-If he's not sitting next to me, he has to be the one to give the note to Nina."""],
+			"description": ["""Bobby's best friend."""],
 			"rules": [
 				AdjacentRule.new({
 					"must_sit_next_to": ["player_male", "player_female"],

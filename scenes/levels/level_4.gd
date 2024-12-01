@@ -98,9 +98,11 @@ It's unclear if Dylan just happens to own a cat... or if their costume is someho
 		},
 		"musician": { 
 			"name": "Xavier",
-			"description": ["""Plays a ~~trumpet~~ ~~trombone~~ ~~french horn~~ brass instrument of some sort in the concert band.
+			"description": ["""Plays [s]trumpet[/s] [s]trombone[/s] [s]french horn[/s] some kind of horn in the concert band.
 
-He's always practising his scales in class. Ms. Moore hates it, but she can't stop him."""],
+He's always practising his scales in class. Ms. Moore hates it, but she can't stop him.
+
+Won't sit next to Ivana after she tipped yoghurt in his horn."""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"],

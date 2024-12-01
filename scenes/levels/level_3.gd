@@ -81,7 +81,7 @@ It's unclear if Dylan just happens to own a cat... or if their costume is someho
 		},
 		"musician": { 
 			"name": "Xavier",
-			"description": ["""Plays a [s]trumpet[/s] [s]trombone[/s] [s]french horn[/s] brass instrument of some kind in the concert band.
+			"description": ["""Plays [s]trumpet[/s] [s]trombone[/s] [s]french horn[/s] some kind of horn in the concert band.
 
 He's always practising his scales in class. Ms. Moore hates it, but she can't stop him.
 

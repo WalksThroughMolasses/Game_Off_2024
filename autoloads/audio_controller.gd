@@ -19,7 +19,7 @@ var initial_volumes = {}  # Dictionary to store initial volumes
 @onready var click_audio_streams = {
 	1: create_audio_stream("res://assets/audio/sfx/pop.mp3"),
 	2: create_audio_stream("res://assets/audio/sfx/place.mp3"),
-	3: create_audio_stream("res://assets/audio/sfx/scribble.mp3")
+	3: create_audio_stream("res://assets/audio/sfx/scribble_2.wav")
 }
 
 @onready var ambience_player_a = $AmbiencePlayerA

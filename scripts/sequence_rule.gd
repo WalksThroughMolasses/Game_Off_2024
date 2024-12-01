@@ -104,11 +104,11 @@ func check_valid(student: Student, note_chain: Array, classroom: Array, desk_gri
 					Requirement.BEFORE:
 						if student_index >= index:
 							result.valid = false
-							result.reason = "Must be in first " + str(index) + " steps"
+							result.reason = "Must be before step " + str(index) + "."
 					Requirement.AFTER:
 						if student_index <= index:
 							result.valid = false
-							result.reason = "Must be after step " + str(index)
+							result.reason = "Must be after step " + str(index) + "."
 							
 	return result
 

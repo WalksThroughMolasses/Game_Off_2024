@@ -19,7 +19,9 @@ var level_config = {
 		},
 		"poser": {
 			"name": "Ivana",
-			"description": ["""Won't sit with the twins."""],
+			"description": ["""Bit of a poser, honestly. 
+			
+She wouldn't be caught dead sitting with the twins. Her words, not mine!"""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["twin_01", "twin_02", "smelly"],
@@ -65,7 +67,7 @@ She'll probably start a fight if she's sitting next to either of them, which I d
 			"name": "Eleanor",
 			"description": ["""Captain of the debate team, rowing team, croquet team and etiquette team.
 			
-She won't help until she finishes her tea. (After turn 3)"""],
+She won't help until she finishes her tea. (After step 3)"""],
 			"rules": [
 				AdjacentRule.new({
 					"cant_sit_next_to": ["smelly"],
@@ -177,7 +179,7 @@ I'd have to wake her up to get any help from her. No easy feat."""],
 			"name": "Bronson",
 			"description": ["""He reckons soap saps vital nutrients from the skin.
 
-Most people aren't going to put up with sitting next to him... But Little Lilypad would probably see the flies and think free lunch."""],
+Most people aren't going to put up with sitting next to him. But Little Lilypad would probably see the flies and think, 'Free lunch.'"""],
 			"rules": []
 		},
 		"frog": {
@@ -209,7 +211,7 @@ Need to make eye contact to get her attention, so can't pass to her from behind.
 			"name": "Albert",
 			"description": ["""I don't know what's up with him, but he's always sick.
 							
-If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before turn 3)"""],
+If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before step 3)"""],
 			"rules": [
 				SequenceRule.new({
 					"order": {

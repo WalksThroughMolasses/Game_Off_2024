@@ -5,8 +5,8 @@
 [ext_resource type="Texture2D" uid="uid://cbbmsi15o8x4" path="res://icon.svg" id="3_ajofj"]
 [ext_resource type="Texture2D" uid="uid://fd7xk3ma0eo5" path="res://assets/sprites/characters/Player_Female.png" id="3_wrgr4"]
 [ext_resource type="Texture2D" uid="uid://bfpn3ryc6oiju" path="res://assets/sprites/heart.png" id="5_4o8nh"]
-[ext_resource type="Texture2D" uid="uid://bdas85roqk6oh" path="res://assets/sprites/broken_heart.png" id="6_5fucj"]
-[ext_resource type="Texture2D" uid="uid://c8rxd018feiuj" path="res://assets/sprites/player_icon.png" id="6_ro7ng"]
+[ext_resource type="Texture2D" uid="uid://bd43amgjfm0wn" path="res://assets/sprites/User Icon.png" id="6_bhk72"]
+[ext_resource type="Texture2D" uid="uid://cp5r0nfexprq2" path="res://assets/sprites/broken_heart_v2.png" id="7_un31k"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_y7n1q"]
 
@@ -164,6 +164,18 @@ grow_horizontal = 0
 pivot_offset = Vector2(33.5, 29)
 texture = ExtResource("5_4o8nh")
 
+[node name="PlayerIcon" type="TextureRect" parent="Control"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = -15.0
+offset_right = 15.0
+grow_horizontal = 0
+pivot_offset = Vector2(33.5, 29)
+texture = ExtResource("6_bhk72")
+
 [node name="BrokenHeart" type="TextureRect" parent="Control"]
 visible = false
 layout_mode = 1
@@ -173,19 +185,7 @@ anchor_right = 1.0
 offset_top = -15.0
 offset_right = 15.0
 grow_horizontal = 0
-texture = ExtResource("6_5fucj")
-
-[node name="PlayerIcon" type="TextureRect" parent="Control"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -33.5
-offset_top = -25.0
-offset_right = 33.5
-grow_horizontal = 2
-texture = ExtResource("6_ro7ng")
+texture = ExtResource("7_un31k")
 
 [node name="Area2D" type="Area2D" parent="."]
 

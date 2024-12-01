@@ -102,7 +102,7 @@ Unfortunately that includes picking on Billy."""],
 			"name": "Bronson",
 			"description": ["""He reckons soap saps vital nutrients from the skin.
 
-Most people aren't going to put up with sitting next to him... But Little Lilypad would probably see the flies and think free lunch."""],
+Most people aren't going to put up with sitting next to him. But Little Lilypad would probably see the flies and think, 'Free lunch.'"""],
 			"rules": []
 		},
 		"frog": {
@@ -127,8 +127,19 @@ Need to make eye contact to get her attention, so can't pass to her from behind.
 			"name": "Albert",
 			"description": ["""I don't know what's up with him, but he's always sick.
 							
-If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before turn 3)"""],
-			"rules": []
+If I want his help, I should get it early, as he's probably going to head to sick bay soon. (Before step 3)"""],
+			"rules": [
+				SequenceRule.new({
+					"order": {
+						"chain_index": {
+							3: Globals.Requirement.BEFORE
+						}
+					}
+				}),
+				AdjacentRule.new({
+					"cant_sit_next_to": ["smelly"],
+				})
+			]
 		},
 		"crying": {
 			"name": "Billy",

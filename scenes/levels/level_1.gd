@@ -33,6 +33,29 @@ He won't sit next anyone who might pick on him, unless he has Alice nearby to ba
 				})
 			]
 		},
+		"shakas": {
+			"name": "Alice",
+			"description": ["""Pretty pissed off with Trent and Jayden for picking on Billy. 
+			
+She'll probably start a fight if she's sitting next to either of them, which I don't want."""],
+			"rules": [
+				AdjacentRule.new({
+					"cant_sit_next_to": ["bully_01", "bully_02", "smelly", "furry"]
+				})
+			]
+		},
+		"bff_male": {
+			"name": "Eugene",
+			"description": ["""My best friend.
+
+If he's not sitting next to me, he has to be the one to give the note to Nina."""],
+			"rules": [
+				AdjacentRule.new({
+					"must_sit_next_to": ["player_male", "player_female"],
+					"cant_sit_next_to": ["smelly"]
+				})
+			]
+		},
 		"headphones": {
 			"name": "Aabria",
 			"description": ["""Always listening to loud music. 

@@ -31,10 +31,6 @@ func _ready():
 	
 	start_menu.show()
 	
-	## Load level
-	#load_level_config()
-	#setup_level()
-	
 func _input(event):
 	
 	if awaiting_level_advance:
@@ -49,8 +45,6 @@ func _input(event):
 		Globals.selected_student = null
 		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_ARROW)
 		Input.set_custom_mouse_cursor(Globals.cursor, Input.CURSOR_FORBIDDEN)
-		#AudioController.play_sfx("click")
-		#AudioController.play_sfx("release")
 
 func setup_level():
 	# Clear placeholder grid
@@ -84,12 +78,13 @@ func setup_level():
 	# Display note
 	print("Displaying next note.")
 	note_screen.display_next_note()
-	
-	# Play ambience
-	#AudioController.play_ambience()
 
 	# Update initial highlights
 	update_preview()
+	
+func load_end_screen():
+	Globals.game_over = true
+	note_screen.display_next_note()
 	
 func load_level_config():
 	print(Globals.current_level)
@@ -104,13 +99,20 @@ func on_level_complete(note_chain):
 	print("Level Complete!")
 	awaiting_level_advance = true
 	await play_note_passing_animation(note_chain)
-	# Wait until the animation sets awaiting_level_advance back to false
 	await get_tree().create_timer(0.1).timeout  # Small buffer to ensure animation started
-	#await awaiting_level_advance == false
+	
 	Globals.current_level += 1
-	load_level_config()
-	reset_and_setup_level()
+	if Globals.current_level <= 6:
+		load_level_config()
+		reset_and_setup_level()
+	elif Globals.current_level == 7:
+		load_end_screen()
 
+func restart_game():
+	Globals.current_level = 1
+	Globals.game_over = false
+	get_tree().reload_current_scene()
+	
 func reset_and_setup_level():
 	# Reset current note holder and player references
 	current_note_holder = null
@@ -223,11 +225,21 @@ func play_note_passing_animation(note_chain: Array, delay: float = 0.2):
 			# Kill previous tween if it exists
 			if tween:
 				tween.kill()
-			# Create new tween
+				
+			# Calculate movement direction and set rotation
+			var movement = next_student.position - current_student.position
+			var is_vertical = abs(movement.y) > abs(movement.x)
+			
+			# Create rotation tween
+			var rotation_tween = create_tween()
+			var target_rotation = 90.0 if is_vertical else 0.0
+			rotation_tween.tween_property(note_animation, "rotation_degrees", target_rotation, delay/2).set_ease(Tween.EASE_IN_OUT)
+			
+			# Create movement tween
 			tween = create_tween()
-			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			tween.tween_property(note_animation, "position", next_student.position, delay).set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_LINEAR)
 			await tween.finished
-	
+
 	var crush = get_tree().get_first_node_in_group("crush")
 	crush.heartbeat_animation()
 	AudioController.play_school_bell()

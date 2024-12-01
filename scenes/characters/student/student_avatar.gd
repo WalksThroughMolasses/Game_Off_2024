@@ -35,10 +35,12 @@ func set_grid_position(pos: Vector2i):
 	grid_position = pos
 
 func _apply_name(student_name):
-	#highlight(true)
 	if "empty" in student_name:
 		set_desk_empty()
 	else:
+		character_art.texture = character_textures[student_name]
+		character_art.show()
+		
 		# Special case for last level
 		if Globals.current_level == 6:
 			if student_name == "bff_female":
@@ -59,9 +61,6 @@ func _apply_name(student_name):
 					self.make_crush()
 				else:
 					self.make_player()
-
-		character_art.texture = character_textures[student_name]
-		character_art.show()
 		
 		debug_label.text = student_name
 		
@@ -102,6 +101,9 @@ func make_player():
 	self.add_to_group("player")
 	self.remove_from_group("crush")
 	
+	if Globals.current_level == 5:
+		character_art.texture = character_textures["player_female_sad"]
+	
 	player_icon.show()
 	
 	self.is_moveable = false
@@ -110,11 +112,14 @@ func make_player():
 	grab_focus()
 
 func make_crush():
-	#character_art.texture = character_textures["crush"]
+
 	self.add_to_group("crush")
 	self.remove_from_group("player")
 	
-	if Globals.current_level == 5:
+	if Globals.current_level == 6:
+		character_art.texture = character_textures["player_female_sad"]
+	
+	if Globals.current_level == 5 or Globals.current_level == 6:
 		broken_heart.show()
 	else:
 		heart.show()
@@ -152,6 +157,13 @@ func hide_preview():
 	character_art.hide()
 	
 func heartbeat_animation():
+	
+	# Special case for last level
+	if Globals.current_level == 6:
+		character_art.texture = character_textures["player_female"]
+		broken_heart.hide()
+		heart.show()
+	
 	var tween = create_tween()
 	tween.set_loops(5)  # Set how many times you want it to loop
 

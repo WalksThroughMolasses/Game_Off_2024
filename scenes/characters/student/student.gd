@@ -30,7 +30,8 @@ const character_textures = {
 	"smelly": preload("res://assets/sprites/characters/Smelly.png"),
 	"twin_01": preload("res://assets/sprites/characters/TwinA.png"),
 	"twin_02": preload("res://assets/sprites/characters/TwinB.png"),
-	"empty_desk": preload("res://assets/sprites/characters/Empty_select.png")
+	"empty_desk": preload("res://assets/sprites/characters/Empty_select.png"),
+	"player_female_sad": preload("res://assets/sprites/characters/Player_Female_Sad_Large.png")
 }
 
 const character_icon_textures = {
@@ -52,7 +53,8 @@ const character_icon_textures = {
 	"sleepy": preload("res://assets/sprites/characters/Sleepy_select.png"),
 	"smelly": preload("res://assets/sprites/characters/Smelly_select.png"),
 	"twin_01": preload("res://assets/sprites/characters/TwinA_select.png"),
-	"twin_02": preload("res://assets/sprites/characters/TwinB_select.png")
+	"twin_02": preload("res://assets/sprites/characters/TwinB_select.png"),
+	"player_female_sad": preload("res://assets/sprites/characters/Player_Female_Sad_Large.png")
 }
 
 @onready var drag_preview_scene = preload("res://scenes/ui/drag_preview.tscn")
